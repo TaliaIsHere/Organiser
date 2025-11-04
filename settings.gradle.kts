@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Organiser"
 include(":app")
+include(":ui")
+include(":ui:impl")
