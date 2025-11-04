@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import app.allulith.ui.impl.theme.OrganiserTheme
-import app.allulith.ui.impl.OrganiserButton
+import app.allulith.ui.impl.components.buttons.OrganiserButton
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
