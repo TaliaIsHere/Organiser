@@ -6,6 +6,16 @@ import androidx.compose.ui.text.TextStyle
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 internal object OrganiserTextDefaults {
+    object Header {
+        val color: Color
+            @Composable
+            get() = OrganiserTheme.colors.primary
+
+        val textStyle: TextStyle
+            @Composable
+            get() = OrganiserTheme.typography.header
+    }
+
     object Body {
         val color: Color
             @Composable

@@ -7,24 +7,24 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
-fun OrganiserBodyText(
+fun OrganiserHeaderText(
     text: String,
     modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
         modifier = modifier,
-        style = OrganiserTextDefaults.Body.textStyle,
-        color = OrganiserTextDefaults.Body.color,
+        style = OrganiserTextDefaults.Header.textStyle,
+        color = OrganiserTextDefaults.Header.color,
     )
 }
 
 @PreviewLightDark
 @Composable
-private fun OrganiserBodyTextPreview() {
+private fun OrganiserHeaderTextPreview() {
     OrganiserTheme {
-        OrganiserBodyText(
-            text = "Body",
+        OrganiserHeaderText(
+            text = "Header",
         )
     }
 }
