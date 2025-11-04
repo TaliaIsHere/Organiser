@@ -13,7 +13,7 @@ internal object OrganiserButtonDefaults {
             containerColor = OrganiserTheme.colors.background,
         )
 
-    val type: TextStyle
+    val textStyle: TextStyle
         @Composable
         get() = OrganiserTheme.typography.body
 }

@@ -8,17 +8,25 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
 fun OrganiserButton(
+    text: String,
     onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,
         colors = OrganiserButtonDefaults.colors,
     ) {
-        Text(
-            text = "Click me!",
-            style = OrganiserButtonDefaults.type,
+        ButtonText(
+            text = text,
         )
     }
+}
+
+@Composable
+private fun ButtonText(text: String) {
+    Text(
+        text = text,
+        style = OrganiserButtonDefaults.textStyle,
+    )
 }
 
 @PreviewLightDark
@@ -26,6 +34,7 @@ fun OrganiserButton(
 private fun OrganiserButtonPreview() {
     OrganiserTheme {
         OrganiserButton(
+            text = "Click me!",
             onClick = {},
         )
     }
