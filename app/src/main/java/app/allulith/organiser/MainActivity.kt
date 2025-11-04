@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.allulith.ui.impl.theme.OrganiserTheme
 import app.allulith.ui.impl.components.buttons.OrganiserButton
+import app.allulith.ui.impl.templates.OrganiserScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,19 +24,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             OrganiserTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                ) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .padding(all = 24.dp),
-                    ) {
-                        OrganiserButton(
-                            onClick = {},
-                        )
-                    }
-                }
+                OrganiserScreen(
+                    header = "Organiser",
+                    description = "Welcome to Organiser...",
+                ) {}
             }
         }
     }
