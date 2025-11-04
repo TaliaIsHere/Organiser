@@ -15,5 +15,5 @@ internal object OrganiserButtonDefaults {
 
     val type: TextStyle
         @Composable
-        get() = OrganiserTheme.typography.header
+        get() = OrganiserTheme.typography.body
 }
