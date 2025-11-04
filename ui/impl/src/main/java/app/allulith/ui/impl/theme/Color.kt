@@ -1,4 +1,4 @@
-package app.allulith.organiser.ui.theme
+package app.allulith.ui.impl.theme
 
 import androidx.compose.ui.graphics.Color
 
