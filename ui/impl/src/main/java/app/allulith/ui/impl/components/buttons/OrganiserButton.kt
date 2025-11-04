@@ -3,6 +3,7 @@ package app.allulith.ui.impl.components.buttons
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.allulith.ui.impl.theme.OrganiserTheme
 
@@ -10,9 +11,11 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 fun OrganiserButton(
     text: String,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Button(
         onClick = onClick,
+        modifier = modifier,
         colors = OrganiserButtonDefaults.colors,
     ) {
         ButtonText(
