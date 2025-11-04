@@ -4,7 +4,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import app.allulith.ui.impl.text.OrganiserBodyText
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
@@ -16,10 +15,18 @@ fun OrganiserButton(
         onClick = onClick,
         colors = OrganiserButtonDefaults.colors,
     ) {
-        OrganiserBodyText(
+        ButtonText(
             text = text,
         )
     }
+}
+
+@Composable
+private fun ButtonText(text: String) {
+    Text(
+        text = text,
+        style = OrganiserButtonDefaults.textStyle,
+    )
 }
 
 @PreviewLightDark
