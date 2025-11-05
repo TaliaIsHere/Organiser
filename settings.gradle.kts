@@ -23,3 +23,5 @@ rootProject.name = "Organiser"
 include(":app")
 include(":ui")
 include(":ui:impl")
+include(":data")
+include(":data:impl")
