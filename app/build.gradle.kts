@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation(project(":ui:impl"))
     implementation(project(":data:impl"))
+    implementation(project(":signup:impl"))
 
     implementation(libs.bundles.core.ui)
     implementation(libs.bundles.compose)

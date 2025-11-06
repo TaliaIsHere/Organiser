@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.allulith.signup.impl.ui.SignUpRoute
 import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,10 +29,7 @@ internal class OrganiserActivity : ComponentActivity() {
                 if (uiState.startRoute != null) {
                     when (uiState.startRoute) {
                         else -> {
-                            OrganiserScreen(
-                                header = "Welcome to Organiser...",
-                                description = "This is a description",
-                            ) { }
+                            SignUpRoute()
                         }
                     }
                 }
