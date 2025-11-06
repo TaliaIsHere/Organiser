@@ -10,7 +10,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import app.allulith.ui.impl.text.OrganiserBodyText
 import app.allulith.ui.impl.text.OrganiserHeaderText
 import app.allulith.ui.impl.theme.OrganiserTheme
@@ -29,8 +28,10 @@ fun OrganiserScreen(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
+                .padding(OrganiserTheme.dimensions.padding.large)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement
+                .spacedBy(OrganiserTheme.dimensions.padding.medium),
         ) {
             OrganiserHeaderText(text = header)
             if (description != null) {
