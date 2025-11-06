@@ -15,14 +15,14 @@ internal class OrganiserViewModel @Inject constructor(
     organiserRepository: OrganiserRepository,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<Organiser.UiState>(Organiser.UiState.Loading)
+    private val _uiState = MutableStateFlow(Organiser.UiState())
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             val user = organiserRepository.getUser()
 
-            _uiState.value = Organiser.UiState.Data(
+            _uiState.value = Organiser.UiState(
                 startRoute = when (user == null) {
                     true -> "signup"
                     false -> "home"
