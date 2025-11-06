@@ -59,7 +59,10 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.hilt)
+    implementation(libs.bundles.persistence)
+    
     ksp(libs.hilt.ksp)
+    ksp(libs.room.compiler)
 
     testImplementation(libs.bundles.test)
 

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Organiser">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.OrganiserActivity"
             android:exported="true"
             android:theme="@style/Theme.Organiser">
             <intent-filter>

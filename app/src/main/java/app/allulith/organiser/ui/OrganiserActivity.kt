@@ -1,20 +1,23 @@
-package app.allulith.organiser
+package app.allulith.organiser.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import app.allulith.ui.impl.theme.OrganiserTheme
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import app.allulith.ui.impl.templates.OrganiserScreen
+import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+internal class OrganiserActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContent {
+            val viewModel: OrganiserViewModel = hiltViewModel()
+
             OrganiserTheme {
                 OrganiserScreen(
                     header = "Organiser",
