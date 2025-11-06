@@ -22,7 +22,12 @@ internal class OrganiserViewModel @Inject constructor(
         viewModelScope.launch {
             val user = organiserRepository.getUser()
 
-            Log.d("test_out", "User: $user")
+            _uiState.value = Organiser.UiState.Data(
+                startRoute = when (user == null) {
+                    true -> "signup"
+                    false -> "home"
+                },
+            )
         }
     }
 }

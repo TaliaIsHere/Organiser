@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.allulith.organiser.ui.screens.OrganiserLoadingScreen
 import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,18 +25,13 @@ internal class OrganiserActivity : ComponentActivity() {
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
             val backStack = remember { mutableStateListOf<Any>() }
 
-            when (uiState) {
-                Organiser.UiState.Loading -> {
-                    OrganiserTheme {
-                        OrganiserScreen(
-                            header = "Organiser",
-                            description = "Loading...",
-                        ) {}
+            OrganiserTheme {
+                when (uiState) {
+                    Organiser.UiState.Loading -> {
+                        OrganiserLoadingScreen()
                     }
-                }
 
-                is Organiser.UiState.Data -> {
-                    OrganiserTheme {
+                    is Organiser.UiState.Data -> {
                         OrganiserScreen(
                             header = "Organiser",
                             description = "Data...",
