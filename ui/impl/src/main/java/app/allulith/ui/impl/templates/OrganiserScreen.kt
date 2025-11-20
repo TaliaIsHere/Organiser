@@ -38,7 +38,7 @@ fun OrganiserScreen(
                         start = OrganiserTheme.dimensions.padding.medium,
                         end = OrganiserTheme.dimensions.padding.medium,
                         bottom = WindowInsets.navigationBars.asPaddingValues()
-                            .calculateBottomPadding(),
+                            .calculateBottomPadding() + OrganiserTheme.dimensions.padding.small,
                     )
                 ) {
                     OrganiserButton(

@@ -6,13 +6,13 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class OrganiserColorScheme(
-    val primary: Color,
+    val onBackground: Color,
     val background: Color,
 )
 
 internal val LocalOrganiserColors = staticCompositionLocalOf {
     OrganiserColorScheme(
-        primary = Color.Unspecified,
+        onBackground = Color.Unspecified,
         background = Color.Unspecified,
     )
 }

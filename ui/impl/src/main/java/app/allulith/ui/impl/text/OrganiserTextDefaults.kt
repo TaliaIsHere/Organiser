@@ -9,7 +9,7 @@ internal object OrganiserTextDefaults {
     object Header {
         val color: Color
             @Composable
-            get() = OrganiserTheme.colors.primary
+            get() = OrganiserTheme.colors.onBackground
 
         val textStyle: TextStyle
             @Composable
@@ -19,7 +19,7 @@ internal object OrganiserTextDefaults {
     object Body {
         val color: Color
             @Composable
-            get() = OrganiserTheme.colors.primary
+            get() = OrganiserTheme.colors.onBackground
 
         val textStyle: TextStyle
             @Composable
