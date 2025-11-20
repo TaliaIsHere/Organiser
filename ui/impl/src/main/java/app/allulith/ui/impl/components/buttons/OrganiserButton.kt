@@ -1,5 +1,6 @@
 package app.allulith.ui.impl.components.buttons
 
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +16,8 @@ fun OrganiserButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier.height(OrganiserButtonDefaults.height),
+        shape = OrganiserButtonDefaults.shape,
         colors = OrganiserButtonDefaults.colors,
     ) {
         ButtonText(
