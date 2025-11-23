@@ -1,8 +1,8 @@
-package app.allulith.organiser.domain
+package app.allulith.routing.impl.domain
 
 import app.allulith.data.impl.entity.User
 
-internal interface OrganiserRepository {
+interface RoutingRepository {
 
     suspend fun getUser(): User?
 }

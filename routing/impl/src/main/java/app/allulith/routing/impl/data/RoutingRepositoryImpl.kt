@@ -1,13 +1,13 @@
-package app.allulith.organiser.data
+package app.allulith.routing.impl.data
 
 import app.allulith.data.impl.OrganiserDatabase
 import app.allulith.data.impl.entity.User
-import app.allulith.organiser.domain.OrganiserRepository
+import app.allulith.routing.impl.domain.RoutingRepository
 import javax.inject.Inject
 
-internal class OrganiserRepositoryImpl @Inject constructor(
+internal class RoutingRepositoryImpl @Inject constructor(
     private val database: OrganiserDatabase,
-) : OrganiserRepository {
+) : RoutingRepository {
 
     override suspend fun getUser(): User? {
         return database.userDao().getAll().firstOrNull()

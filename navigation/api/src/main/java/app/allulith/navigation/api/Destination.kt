@@ -1,6 +1,7 @@
 package app.allulith.navigation.api
 
 sealed class Destination {
-    data object SignUpDestination : Destination()
+    data object Routing : Destination()
+    data object SignUp : Destination()
     data object Home : Destination()
 }

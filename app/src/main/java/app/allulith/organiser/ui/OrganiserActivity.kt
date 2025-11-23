@@ -7,13 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import app.allulith.navigation.api.Destination
+import app.allulith.routing.impl.ui.RoutingRoute
 import app.allulith.signup.impl.ui.SignUpRoute
 import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,10 +25,8 @@ internal class OrganiserActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val viewModel: OrganiserViewModel = hiltViewModel()
-            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
             val backStack = remember { mutableStateListOf<Destination>() }
-            backStack.add(Destination.SignUpDestination)
+            backStack.add(Destination.Routing)
 
             OrganiserTheme {
                 NavDisplay(
@@ -41,7 +38,10 @@ internal class OrganiserActivity : ComponentActivity() {
                     ),
                     entryProvider = { key ->
                         when (key) {
-                            Destination.SignUpDestination -> NavEntry(key) {
+                            Destination.Routing -> NavEntry(key) {
+                                RoutingRoute(backStack = backStack)
+                            }
+                            Destination.SignUp -> NavEntry(key) {
                                 SignUpRoute()
                             }
                             Destination.Home -> NavEntry(key) {
