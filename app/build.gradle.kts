@@ -54,6 +54,7 @@ dependencies {
     implementation(project(":ui:impl"))
     implementation(project(":data:impl"))
     implementation(project(":signup:impl"))
+    implementation(project(":navigation:api"))
 
     implementation(libs.bundles.core.ui)
     implementation(libs.bundles.compose)

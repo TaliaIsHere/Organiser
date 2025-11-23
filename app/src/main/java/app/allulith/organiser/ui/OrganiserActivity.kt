@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.ui.NavDisplay
+import app.allulith.navigation.api.Destination
 import app.allulith.signup.impl.ui.SignUpRoute
-import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,16 +26,24 @@ internal class OrganiserActivity : ComponentActivity() {
         setContent {
             val viewModel: OrganiserViewModel = hiltViewModel()
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-            val backStack = remember { mutableStateListOf<Any>() }
+            val backStack = remember { mutableStateListOf<Destination>() }
+            backStack.add(Destination.SignUpDestination)
 
             OrganiserTheme {
-                if (uiState.startRoute != null) {
-                    when (uiState.startRoute) {
-                        else -> {
-                            SignUpRoute()
+                NavDisplay(
+                    backStack = backStack,
+                    onBack = { backStack.removeLastOrNull() },
+                    entryProvider = { key ->
+                        when (key) {
+                            Destination.SignUpDestination -> NavEntry(key) {
+                                SignUpRoute()
+                            }
+                            Destination.Home -> NavEntry(key) {
+                                Text("HOME")
+                            }
                         }
                     }
-                }
+                )
             }
         }
     }

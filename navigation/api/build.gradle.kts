@@ -3,11 +3,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "app.allulith.signup.impl"
+    namespace = "app.allulith.navigation.api"
     compileSdk {
         version = release(36)
     }
@@ -32,17 +33,6 @@ android {
             jvmTarget = JvmTarget.JVM_11
         }
     }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
-dependencies {
-    implementation(project(":ui:impl"))
-    implementation(project(":navigation:api"))
-
-    implementation(libs.bundles.core.ui)
-    implementation(libs.bundles.compose)
-    implementation(platform(libs.androidx.compose.bom))
-}
+dependencies {}
