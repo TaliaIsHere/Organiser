@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "app.allulith.routing.impl"
+    namespace = "app.allulith.routing.api"
     compileSdk {
         version = release(36)
     }
@@ -41,12 +41,14 @@ android {
 }
 
 dependencies {
-    api(project(":routing:api"))
     implementation(project(":data:impl"))
+    implementation(project(":ui:impl"))
+    implementation(project(":navigation:api"))
 
+    implementation(libs.bundles.core.ui)
+    implementation(libs.bundles.compose)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.hilt)
-    implementation(libs.bundles.persistence)
 
     ksp(libs.hilt.ksp)
-    ksp(libs.room.compiler)
 }

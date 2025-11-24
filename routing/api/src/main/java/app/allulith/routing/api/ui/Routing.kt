@@ -1,4 +1,4 @@
-package app.allulith.routing.impl.ui
+package app.allulith.routing.api.ui
 
 object Routing {
 

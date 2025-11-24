@@ -1,4 +1,4 @@
-package app.allulith.routing.impl.ui
+package app.allulith.routing.api.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

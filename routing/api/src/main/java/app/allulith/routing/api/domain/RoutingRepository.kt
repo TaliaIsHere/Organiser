@@ -1,4 +1,4 @@
-package app.allulith.routing.impl.domain
+package app.allulith.routing.api.domain
 
 import app.allulith.data.impl.entity.User
 
