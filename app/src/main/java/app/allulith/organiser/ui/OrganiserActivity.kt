@@ -42,7 +42,11 @@ internal class OrganiserActivity : ComponentActivity() {
                                 RoutingRoute(backStack = backStack)
                             }
                             Destination.SignUp -> NavEntry(key) {
-                                SignUpRoute()
+                                SignUpRoute(
+                                    onContinue = {
+                                        backStack.add(Destination.Home)
+                                    },
+                                )
                             }
                             Destination.Home -> NavEntry(key) {
                                 Text("HOME")
