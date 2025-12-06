@@ -15,17 +15,15 @@ import javax.inject.Inject
 class RoutingViewModel @Inject constructor(
     routingRepository: RoutingRepository,
 ) : ViewModel() {
-    private val eventsChannel: Channel<Routing.Event> = Channel(Channel.Factory.BUFFERED)
+    private val eventsChannel: Channel<Routing.Event> = Channel(Channel.BUFFERED)
     val eventsFlow = eventsChannel.receiveAsFlow()
 
     init {
         viewModelScope.launch {
-            val user = routingRepository.getUser()
-
-            when (user == null) {
-                true -> eventsChannel.send(Routing.Event.NavigateToSignUp)
-                false -> eventsChannel.send(Routing.Event.NavigateToHome)
-            }
+            routingRepository.getUser().fold(
+                ifRight = { eventsChannel.send(Routing.Event.NavigateToHome) },
+                ifLeft = { eventsChannel.send(Routing.Event.NavigateToSignUp) },
+            )
         }
     }
 }

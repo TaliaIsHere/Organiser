@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":ui:impl"))
     implementation(project(":navigation:api"))
 
+    implementation(libs.bundles.arrow)
     implementation(libs.bundles.core.ui)
     implementation(libs.bundles.compose)
     implementation(platform(libs.androidx.compose.bom))

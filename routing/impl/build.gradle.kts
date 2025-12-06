@@ -44,6 +44,7 @@ dependencies {
     api(project(":routing:api"))
     implementation(project(":data:impl"))
 
+    implementation(libs.bundles.arrow)
     implementation(libs.bundles.hilt)
     implementation(libs.bundles.persistence)
 
