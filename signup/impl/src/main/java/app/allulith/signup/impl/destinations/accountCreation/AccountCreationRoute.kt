@@ -1,10 +1,13 @@
-package app.allulith.signup.impl.ui.destinations.accountCreation
+package app.allulith.signup.impl.destinations.accountCreation
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.allulith.signup.impl.R
 import app.allulith.ui.impl.components.textfields.OrganiserTextField
 import app.allulith.ui.impl.templates.OrganiserScreen
@@ -13,25 +16,40 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
 internal fun AccountCreationRoute(
-    onContinue: () -> Unit,
+    navigateToHome: () -> Unit,
+    viewModel: AccountCreationViewModel = hiltViewModel(),
 ) {
-    AccountCreationScreen(onContinue = onContinue)
+    LaunchedEffect(Unit) {
+        viewModel.eventsFlow.collect { event ->
+            when (event) {
+                AccountCreation.Event.NavigateToHome -> navigateToHome()
+            }
+        }
+    }
+
+    AccountCreationScreen(
+        uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+        onUiEvent = viewModel::onUiEvent,
+    )
 }
 
 @Composable
 private fun AccountCreationScreen(
-    onContinue: () -> Unit,
+    uiState: AccountCreation.UiState,
+    onUiEvent: (AccountCreation.UiEvent) -> Unit,
 ) {
     OrganiserScreen(
         header = stringResource(R.string.signup_account_creation_header),
         description = stringResource(R.string.signup_account_creation_description),
         primaryAction = OrganiserScreenAction(
             text = stringResource(R.string.signup_account_creation_button_text),
-            onClick = onContinue,
+            onClick = {
+                onUiEvent(AccountCreation.UiEvent.OnCreateAccountTap)
+            },
         )
     ) {
         OrganiserTextField(
-            text = "",
+            text = uiState.name,
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.signup_account_creation_text_field_label),
@@ -45,7 +63,8 @@ private fun AccountCreationScreen(
 private fun AccountCreationScreenPreview() {
     OrganiserTheme {
         AccountCreationScreen(
-            onContinue = {},
+            uiState = AccountCreation.UiState(),
+            onUiEvent = {},
         )
     }
 }

@@ -1,4 +1,4 @@
-package app.allulith.signup.impl.ui
+package app.allulith.signup.impl
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -12,14 +12,14 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import app.allulith.signup.impl.ui.destinations.SignUpDestination
-import app.allulith.signup.impl.ui.destinations.accountCreation.AccountCreationRoute
-import app.allulith.signup.impl.ui.destinations.welcome.WelcomeRoute
+import app.allulith.signup.impl.destinations.SignUpDestination
+import app.allulith.signup.impl.destinations.accountCreation.AccountCreationRoute
+import app.allulith.signup.impl.destinations.welcome.WelcomeRoute
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
 fun SignUpNavigation(
-    onContinue: () -> Unit,
+    navigateToHome: () -> Unit,
 ) {
     val backStack = remember { mutableStateListOf<SignUpDestination>() }
     backStack.add(SignUpDestination.Welcome)
@@ -45,7 +45,7 @@ fun SignUpNavigation(
 
                 SignUpDestination.AccountCreation -> NavEntry(key) {
                     AccountCreationRoute(
-                        onContinue = onContinue,
+                        navigateToHome = navigateToHome,
                     )
                 }
             }

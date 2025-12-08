@@ -1,4 +1,4 @@
-package app.allulith.signup.impl.ui.destinations.welcome
+package app.allulith.signup.impl.destinations.welcome
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
