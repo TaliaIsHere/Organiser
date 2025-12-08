@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="signup_welcome_header">Welcome to Organiser!</string>
-    <string name="signup_welcome_description">There are a few things to set-up before we can start</string>
+    <string name="signup_welcome_description">There are a few things to set-up before we can
+        start:\n\n
+        \t- First we\'ll need to create an account\n
+        \t- Next we\'ll setup some simple tasks to track\n
+        \t- Lastly, we\'ll set goals
+    </string>
     <string name="signup_welcome_button_text">Get started</string>
 
     <string name="signup_account_creation_header">Time to create an account!</string>
-    <string name="signup_account_creation_description">TODO</string>
+    <string name="signup_account_creation_description">Only ask for a few details and all details
+        are stored locally on device we\'ll only ask for a preferred name to call you to track the
+        profile.
+    </string>
     <string name="signup_account_creation_button_text">Create account</string>
+    <string name="signup_account_creation_text_field_label">Preferred name</string>
+    <string name="signup_account_creation_text_field_placeholder">Your name</string>
 </resources>

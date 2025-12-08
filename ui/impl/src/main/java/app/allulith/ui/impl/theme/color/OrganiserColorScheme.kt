@@ -10,6 +10,9 @@ data class OrganiserColorScheme(
     val onPrimary: Color,
     val background: Color,
     val onBackground: Color,
+    val error: Color,
+    val surface: Color,
+    val onSurface: Color,
 )
 
 internal val LocalOrganiserColors = staticCompositionLocalOf {
@@ -18,5 +21,8 @@ internal val LocalOrganiserColors = staticCompositionLocalOf {
         onPrimary = Color.Unspecified,
         background = Color.Unspecified,
         onBackground = Color.Unspecified,
+        error = Color.Unspecified,
+        surface = Color.Unspecified,
+        onSurface = Color.Unspecified,
     )
 }

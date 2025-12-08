@@ -7,4 +7,7 @@ internal val lightColors = OrganiserColorScheme(
     onPrimary = Color(0xFF040308),
     background = Color(0xFFF2EFE9),
     onBackground = Color(0xFF040308),
+    error = Color(0xFFE5183E),
+    surface = Color(0xFFDAD7CE),
+    onSurface = Color(0xFF040308),
 )
