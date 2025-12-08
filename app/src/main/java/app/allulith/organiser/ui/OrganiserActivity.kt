@@ -15,7 +15,7 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import app.allulith.home.impl.ui.HomeNavigation
+import app.allulith.home.impl.HomeNavigation
 import app.allulith.navigation.api.Destination
 import app.allulith.routing.api.ui.RoutingRoute
 import app.allulith.signup.impl.SignUpNavigation
@@ -56,9 +56,7 @@ internal class OrganiserActivity : ComponentActivity() {
                                 )
                             }
                             Destination.Home -> NavEntry(key) {
-                                HomeNavigation(
-                                    onContinue = {},
-                                )
+                                HomeNavigation()
                             }
                         }
                     },

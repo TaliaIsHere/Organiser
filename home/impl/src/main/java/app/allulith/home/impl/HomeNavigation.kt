@@ -1,4 +1,4 @@
-package app.allulith.home.impl.ui
+package app.allulith.home.impl
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -12,14 +12,12 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import app.allulith.home.impl.ui.destinations.HomeDestination
-import app.allulith.home.impl.ui.destinations.home.HomeRoute
+import app.allulith.home.impl.destinations.home.ui.HomeDestination
+import app.allulith.home.impl.destinations.home.ui.HomeRoute
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
-fun HomeNavigation(
-    onContinue: () -> Unit,
-) {
+fun HomeNavigation() {
     val backStack = remember { mutableStateListOf<HomeDestination>() }
     backStack.add(HomeDestination.Home)
 
@@ -35,9 +33,7 @@ fun HomeNavigation(
         entryProvider = { key ->
             when (key) {
                 HomeDestination.Home -> NavEntry(key) {
-                    HomeRoute(
-                        onContinue = onContinue,
-                    )
+                    HomeRoute()
                 }
             }
         },
