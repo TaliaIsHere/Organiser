@@ -56,6 +56,8 @@ private fun AccountCreationScreen(
             modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.signup_account_creation_text_field_label),
             placeholder = stringResource(R.string.signup_account_creation_text_field_placeholder),
+            isError = uiState.error,
+            errorText = stringResource(R.string.signup_account_creation_text_field_error),
         )
     }
 }

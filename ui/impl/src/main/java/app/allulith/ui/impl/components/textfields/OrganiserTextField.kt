@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.allulith.ui.impl.text.OrganiserBodyText
+import app.allulith.ui.impl.text.OrganiserErrorText
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
@@ -21,6 +23,7 @@ fun OrganiserTextField(
     label: String,
     placeholder: String,
     isError: Boolean = false,
+    errorText: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
@@ -46,6 +49,11 @@ fun OrganiserTextField(
             shape = OrganiserTextFieldDefaults.shape,
             colors = OrganiserTextFieldDefaults.colors,
         )
+        if (isError) {
+            OrganiserErrorText(
+                text = errorText,
+            )
+        }
     }
 }
 
@@ -68,6 +76,7 @@ private fun OrganiserTextFieldPreview() {
                 onValueChange = {},
                 label = "Error text field",
                 isError = true,
+                errorText = "Error",
                 placeholder = "",
             )
         }

@@ -17,4 +17,5 @@
     <string name="signup_account_creation_button_text">Create account</string>
     <string name="signup_account_creation_text_field_label">Preferred name</string>
     <string name="signup_account_creation_text_field_placeholder">Your name</string>
+    <string name="signup_account_creation_text_field_error">Your name cannot be blank</string>
 </resources>
