@@ -8,16 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import app.allulith.navigation.api.Destination
 import app.allulith.signup.impl.ui.destinations.SignUpDestination
-import app.allulith.signup.impl.ui.destinations.welcome.SignUpWelcomeRoute
-import app.allulith.ui.impl.templates.OrganiserScreen
-import app.allulith.ui.impl.templates.OrganiserScreenAction
+import app.allulith.signup.impl.ui.destinations.accountCreation.AccountCreationRoute
+import app.allulith.signup.impl.ui.destinations.welcome.WelcomeRoute
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
@@ -39,7 +36,15 @@ fun SignUpNavigation(
         entryProvider = { key ->
             when (key) {
                 SignUpDestination.Welcome -> NavEntry(key) {
-                    SignUpWelcomeRoute(
+                    WelcomeRoute(
+                        onContinue = {
+                            backStack.add(SignUpDestination.AccountCreation)
+                        },
+                    )
+                }
+
+                SignUpDestination.AccountCreation -> NavEntry(key) {
+                    AccountCreationRoute(
                         onContinue = onContinue,
                     )
                 }
