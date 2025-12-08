@@ -1,8 +1,9 @@
-package app.allulith.signup.impl.destinations.accountCreation
+package app.allulith.signup.impl.destinations.accountCreation.ui
 
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.allulith.signup.impl.destinations.accountCreation.domain.AccountCreationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,9 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-internal class AccountCreationViewModel @Inject constructor() : ViewModel() {
+internal class AccountCreationViewModel @Inject constructor(
+    private val repository: AccountCreationRepository,
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AccountCreation.UiState())
     val uiState = _uiState.asStateFlow()
@@ -42,11 +45,12 @@ internal class AccountCreationViewModel @Inject constructor() : ViewModel() {
         val name = uiState.value.name
         if (name.isBlank()) {
             _uiState.update { it.copy(error = true) }
-            return
-        }
+        } else {
+            viewModelScope.launch {
+                repository.createUser(name = name)
+                eventsChannel.send(AccountCreation.Event.NavigateToHome)
+            }
 
-        viewModelScope.launch {
-            eventsChannel.send(AccountCreation.Event.NavigateToHome)
         }
     }
 }

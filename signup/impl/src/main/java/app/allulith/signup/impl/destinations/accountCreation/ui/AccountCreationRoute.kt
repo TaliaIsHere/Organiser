@@ -1,4 +1,4 @@
-package app.allulith.signup.impl.destinations.accountCreation
+package app.allulith.signup.impl.destinations.accountCreation.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -50,7 +50,9 @@ private fun AccountCreationScreen(
     ) {
         OrganiserTextField(
             text = uiState.name,
-            onValueChange = {},
+            onValueChange = { text ->
+                onUiEvent(AccountCreation.UiEvent.OnNameChange(text = text))
+            },
             modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.signup_account_creation_text_field_label),
             placeholder = stringResource(R.string.signup_account_creation_text_field_placeholder),

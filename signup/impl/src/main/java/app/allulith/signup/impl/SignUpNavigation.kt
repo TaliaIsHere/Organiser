@@ -13,8 +13,8 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import app.allulith.signup.impl.destinations.SignUpDestination
-import app.allulith.signup.impl.destinations.accountCreation.AccountCreationRoute
-import app.allulith.signup.impl.destinations.welcome.WelcomeRoute
+import app.allulith.signup.impl.destinations.accountCreation.ui.AccountCreationRoute
+import app.allulith.signup.impl.destinations.welcome.ui.WelcomeRoute
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable

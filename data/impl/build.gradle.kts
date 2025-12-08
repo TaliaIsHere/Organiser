@@ -37,5 +37,8 @@ android {
 dependencies {
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.persistence)
+    implementation(libs.bundles.hilt)
+
     ksp(libs.room.compiler)
+    ksp(libs.hilt.ksp)
 }

@@ -1,4 +1,4 @@
-package app.allulith.routing.impl.di
+package app.allulith.data.impl.di
 
 import android.content.Context
 import app.allulith.data.impl.OrganiserDatabase

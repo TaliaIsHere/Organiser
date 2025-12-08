@@ -1,4 +1,4 @@
-package app.allulith.signup.impl.destinations.accountCreation
+package app.allulith.signup.impl.destinations.accountCreation.ui
 
 internal object AccountCreation {
 
