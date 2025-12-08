@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signup_welcome_header">Welcome to Organiser!</string>
+    <string name="signup_welcome_description">There are a few things to set-up before we can start</string>
+    <string name="signup_welcome_button_text">Get started</string>
+
+    <string name="signup_account_creation_header">Time to create an account!</string>
+    <string name="signup_account_creation_description">TODO</string>
+    <string name="signup_account_creation_button_text">Create account</string>
+</resources>
