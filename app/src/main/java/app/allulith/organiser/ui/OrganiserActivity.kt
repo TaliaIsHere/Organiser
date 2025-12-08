@@ -12,10 +12,10 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import app.allulith.home.impl.ui.HomeRoute
 import app.allulith.navigation.api.Destination
 import app.allulith.routing.api.ui.RoutingRoute
 import app.allulith.signup.impl.ui.SignUpRoute
-import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,9 +52,9 @@ internal class OrganiserActivity : ComponentActivity() {
                                 )
                             }
                             Destination.Home -> NavEntry(key) {
-                                OrganiserScreen(
-                                    header = "Home"
-                                ) {}
+                                HomeRoute(
+                                    onContinue = {},
+                                )
                             }
                         }
                     }
