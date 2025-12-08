@@ -45,4 +45,5 @@ dependencies {
     implementation(libs.bundles.core.ui)
     implementation(libs.bundles.compose)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.navigation)
 }

@@ -1,4 +1,4 @@
-package app.allulith.signup.impl.ui
+package app.allulith.signup.impl.ui.destinations.welcome
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -7,16 +7,14 @@ import app.allulith.ui.impl.templates.OrganiserScreenAction
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
-fun SignUpRoute(
+internal fun SignUpWelcomeRoute(
     onContinue: () -> Unit,
 ) {
-    SignUpScreen(
-        onContinue = onContinue,
-    )
+    WelcomeScreen(onContinue = onContinue)
 }
 
 @Composable
-private fun SignUpScreen(
+private fun WelcomeScreen(
     onContinue: () -> Unit,
 ) {
     OrganiserScreen(
@@ -33,9 +31,9 @@ private fun SignUpScreen(
 
 @PreviewLightDark
 @Composable
-private fun SignUpScreenPreview() {
+private fun WelcomeScreenPreview() {
     OrganiserTheme {
-        SignUpScreen(
+        WelcomeScreen(
             onContinue = {},
         )
     }
