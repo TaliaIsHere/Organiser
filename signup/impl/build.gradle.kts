@@ -52,5 +52,6 @@ dependencies {
     implementation(libs.bundles.persistence)
 
     ksp(libs.hilt.ksp)
+    ksp(libs.bundles.hilt)
     ksp(libs.room.compiler)
 }

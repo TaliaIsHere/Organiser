@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -39,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":data:impl"))
     implementation(project(":ui:impl"))
     implementation(project(":navigation:api"))
 
@@ -47,4 +49,10 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.hilt)
+    implementation(libs.bundles.persistence)
+    implementation(libs.bundles.arrow)
+
+    ksp(libs.hilt.ksp)
+    ksp(libs.bundles.hilt)
+    ksp(libs.room.compiler)
 }

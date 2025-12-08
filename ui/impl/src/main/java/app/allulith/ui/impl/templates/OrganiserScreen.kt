@@ -74,6 +74,10 @@ private fun OrganiserScreenPreview() {
         OrganiserScreen(
             header = "Header",
             description = "This is a description",
+            primaryAction = OrganiserScreenAction(
+                onClick = {},
+                text = "Click me!",
+            ),
             content = {},
         )
     }
