@@ -21,6 +21,10 @@ internal class HomeViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        personalizeHome()
+    }
+
+    private fun personalizeHome() {
         viewModelScope.launch {
             repository.getUserName().onRight { name ->
                 _uiState.update { it.copy(name = name) }

@@ -18,9 +18,7 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
 fun HomeNavigation() {
-    val backStack = remember { mutableStateListOf<HomeDestination>() }
-    backStack.add(HomeDestination.Home)
-
+    val backStack = remember { mutableStateListOf<HomeDestination>(HomeDestination.Home) }
 
     NavDisplay(
         backStack = backStack,

@@ -30,8 +30,7 @@ internal class OrganiserActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val backStack = remember { mutableStateListOf<Destination>() }
-            backStack.add(Destination.Routing)
+            val backStack = remember { mutableStateListOf<Destination>(Destination.Routing) }
 
             OrganiserTheme {
                 NavDisplay(
