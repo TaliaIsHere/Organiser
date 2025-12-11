@@ -17,7 +17,9 @@ import app.allulith.settings.impl.destinations.settings.ui.SettingsRoute
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
-fun SettingsNavigation() {
+fun SettingsNavigation(
+    onBack: () -> Unit,
+) {
     val backStack = remember { mutableStateListOf<SettingsDestination>(SettingsDestination.Settings) }
 
     NavDisplay(
@@ -31,7 +33,9 @@ fun SettingsNavigation() {
         entryProvider = { key ->
             when (key) {
                 SettingsDestination.Settings -> NavEntry(key) {
-                    SettingsRoute()
+                    SettingsRoute(
+                        onBack = onBack,
+                    )
                 }
             }
         },

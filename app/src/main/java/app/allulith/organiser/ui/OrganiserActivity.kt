@@ -63,7 +63,11 @@ internal class OrganiserActivity : ComponentActivity() {
                                 )
                             }
                             Destination.Settings -> NavEntry(key) {
-                                SettingsNavigation()
+                                SettingsNavigation(
+                                    onBack = {
+                                        backStack.removeLastOrNull()
+                                    },
+                                )
                             }
                         }
                     },
