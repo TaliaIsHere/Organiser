@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.allulith.home.impl.destinations.home.domain.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +23,9 @@ internal class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(Home.UiState())
     val uiState = _uiState.asStateFlow()
 
+    private val eventsChannel: Channel<Home.Event> = Channel(BUFFERED)
+    val eventsFlow = eventsChannel.receiveAsFlow()
+
     init {
         personalizeHome()
     }
@@ -29,6 +35,18 @@ internal class HomeViewModel @Inject constructor(
             repository.getUserName().onRight { name ->
                 _uiState.update { it.copy(name = name) }
             }
+        }
+    }
+
+    fun onUiEvent(uiEvent: Home.UiEvent) {
+        when (uiEvent) {
+            Home.UiEvent.OnSettingsTap -> onSettingsTap()
+        }
+    }
+
+    private fun onSettingsTap() {
+        viewModelScope.launch {
+            eventsChannel.send(Home.Event.NavigateToSettings)
         }
     }
 }

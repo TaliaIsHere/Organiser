@@ -1,30 +1,57 @@
 package app.allulith.home.impl.destinations.home.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.allulith.home.impl.R
+import app.allulith.ui.impl.components.appbars.OrganiserTopBar
+import app.allulith.ui.impl.components.appbars.OrganiserTopBarAction
 import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
 internal fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
+    navigateToSettings: () -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.eventsFlow.collect { event ->
+            when (event) {
+                Home.Event.NavigateToSettings -> navigateToSettings()
+            }
+        }
+    }
+
     HomeScreen(
         uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+        onUiEvent = viewModel::onUiEvent,
     )
 }
 
 @Composable
 private fun HomeScreen(
     uiState: Home.UiState,
+    onUiEvent: (Home.UiEvent) -> Unit,
 ) {
     OrganiserScreen(
         header = stringResource(R.string.home_header, uiState.name),
         description = stringResource(R.string.home_description),
+        topBarContent = {
+            OrganiserTopBar(
+                actions = listOf(
+                    OrganiserTopBarAction(
+                        contentDescription = stringResource(R.string.cd_home_settings),
+                        image = R.drawable.ic_settings,
+                        onClick = {
+                            onUiEvent(Home.UiEvent.OnSettingsTap)
+                        },
+                    )
+                ),
+            )
+        },
     ) {
 
     }
@@ -37,7 +64,8 @@ private fun HomeScreenPreview() {
         HomeScreen(
             uiState = Home.UiState(
                 name = "Nota Areal",
-            )
+            ),
+            onUiEvent = {},
         )
     }
 }

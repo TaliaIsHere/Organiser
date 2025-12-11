@@ -18,6 +18,7 @@ import androidx.navigation3.ui.NavDisplay
 import app.allulith.home.impl.HomeNavigation
 import app.allulith.navigation.api.Destination
 import app.allulith.routing.api.ui.RoutingRoute
+import app.allulith.settings.impl.SettingsNavigation
 import app.allulith.signup.impl.SignUpNavigation
 import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +56,14 @@ internal class OrganiserActivity : ComponentActivity() {
                                 )
                             }
                             Destination.Home -> NavEntry(key) {
-                                HomeNavigation()
+                                HomeNavigation(
+                                    navigateToSettings = {
+                                        backStack.add(Destination.Settings)
+                                    },
+                                )
+                            }
+                            Destination.Settings -> NavEntry(key) {
+                                SettingsNavigation()
                             }
                         }
                     },

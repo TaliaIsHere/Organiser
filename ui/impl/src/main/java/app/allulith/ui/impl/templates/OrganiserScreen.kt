@@ -1,5 +1,6 @@
 package app.allulith.ui.impl.templates
 
+import android.R.attr.description
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -26,10 +27,12 @@ fun OrganiserScreen(
     header: String,
     description: String? = null,
     primaryAction: OrganiserScreenAction? = null,
+    topBarContent: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
+        topBar = topBarContent,
         containerColor = OrganiserScreenDefaults.containerColor,
         bottomBar = {
             if (primaryAction != null) {

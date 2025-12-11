@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_header">Settings</string>
+    <string name="settings_description">Manage options throughout the entire application</string>
+</resources>
