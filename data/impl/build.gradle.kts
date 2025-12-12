@@ -37,7 +37,6 @@ android {
 dependencies {
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.persistence)
-    implementation(libs.bundles.datastore)
     implementation(libs.bundles.hilt)
 
     ksp(libs.room.compiler)

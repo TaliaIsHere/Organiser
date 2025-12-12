@@ -51,8 +51,6 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-ksp = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
 splash-screen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "dataStore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 [bundles]
@@ -75,10 +73,6 @@ arrow = [
 persistence = [
     "room",
     "room-ktx",
-]
-datastore = [
-    "datastore-preferences",
-    "datastore",
 ]
 navigation = [
     "androidx-navigation3-runtime",
