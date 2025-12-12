@@ -1,7 +1,7 @@
-package app.allulith.routing.impl.di
+package app.allulith.routing.impl.routing.di
 
-import app.allulith.routing.impl.data.RoutingRepositoryImpl
-import app.allulith.routing.api.domain.RoutingRepository
+import app.allulith.routing.impl.routing.data.RoutingRepositoryImpl
+import app.allulith.routing.impl.routing.domain.RoutingRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

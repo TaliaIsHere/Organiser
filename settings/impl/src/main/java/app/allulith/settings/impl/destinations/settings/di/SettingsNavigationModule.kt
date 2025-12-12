@@ -1,9 +1,9 @@
-package app.allulith.home.impl.destinations.home.di
+package app.allulith.settings.impl.destinations.settings.di
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import app.allulith.home.impl.homeNavigationBuilder
 import app.allulith.navigation.api.Navigator
+import app.allulith.settings.impl.settingsNavigationBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,13 +13,11 @@ import dagger.multibindings.IntoSet
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-internal object HomeNavigationModule {
+internal object SettingsNavigationModule {
 
     @IntoSet
     @Provides
-    fun provideHomeNavigation() : EntryProviderScope<NavKey>.(Navigator) -> Unit = { navigator ->
-        homeNavigationBuilder(
-            navigator = navigator,
-        )
+    fun provideSettingsNavigation() : EntryProviderScope<NavKey>.(Navigator) -> Unit = { navigator ->
+        settingsNavigationBuilder(navigator = navigator)
     }
 }

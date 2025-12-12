@@ -3,9 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
 
 android {
@@ -34,22 +31,8 @@ android {
             jvmTarget = JvmTarget.JVM_11
         }
     }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
-    implementation(project(":data:impl"))
-    implementation(project(":ui:impl"))
-    implementation(project(":navigation:api"))
-
-    implementation(libs.bundles.arrow)
-    implementation(libs.bundles.core.ui)
-    implementation(libs.bundles.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.bundles.hilt)
-
-    ksp(libs.hilt.ksp)
+    implementation(libs.bundles.navigation)
 }

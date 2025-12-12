@@ -1,9 +1,9 @@
-package app.allulith.routing.impl.data
+package app.allulith.routing.impl.routing.data
 
 import app.allulith.data.impl.OrganiserDatabase
 import app.allulith.data.impl.entity.User
-import app.allulith.routing.api.domain.RoutingRepository
-import app.allulith.routing.api.domain.UserNotFound
+import app.allulith.routing.impl.routing.domain.RoutingRepository
+import app.allulith.routing.impl.routing.domain.UserNotFound
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right

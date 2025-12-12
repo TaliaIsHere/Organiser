@@ -3,13 +3,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "app.allulith.routing.impl"
+    namespace = "app.allulith.settings.api"
     compileSdk {
         version = release(36)
     }
@@ -34,23 +31,8 @@ android {
             jvmTarget = JvmTarget.JVM_11
         }
     }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
-    api(project(":navigation:api"))
-    api(project(":routing:api"))
-    api(project(":home:api"))
-    implementation(project(":data:impl"))
-
-    implementation(libs.bundles.arrow)
-    implementation(libs.bundles.hilt)
-    implementation(libs.bundles.persistence)
     implementation(libs.bundles.navigation)
-
-    ksp(libs.hilt.ksp)
-    ksp(libs.room.compiler)
 }

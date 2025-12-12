@@ -1,9 +1,9 @@
-package app.allulith.routing.api.domain
+package app.allulith.routing.impl.routing.domain
 
 import app.allulith.data.impl.entity.User
 import arrow.core.Either
 
-interface RoutingRepository {
+internal interface RoutingRepository {
 
     suspend fun getUser(): Either<UserNotFound, User>
 }

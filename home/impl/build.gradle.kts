@@ -42,6 +42,7 @@ android {
 dependencies {
     api(project(":home:api"))
 
+    implementation(project(":settings:api"))
     implementation(project(":data:impl"))
     implementation(project(":ui:impl"))
     implementation(project(":navigation:api"))

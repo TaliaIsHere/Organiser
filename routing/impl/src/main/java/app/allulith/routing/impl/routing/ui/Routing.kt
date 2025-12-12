@@ -1,6 +1,6 @@
-package app.allulith.routing.api.ui
+package app.allulith.routing.impl.routing.ui
 
-object Routing {
+internal object Routing {
 
     sealed class Event {
         data object NavigateToHome : Event()
