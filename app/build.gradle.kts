@@ -65,7 +65,8 @@ dependencies {
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.hilt)
     implementation(libs.splash.screen)
-    
+    implementation(libs.androidx.appcompat)
+
     ksp(libs.hilt.ksp)
 
     testImplementation(libs.bundles.test)
