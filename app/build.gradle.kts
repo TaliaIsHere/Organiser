@@ -64,6 +64,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.hilt)
+    implementation(libs.splash.screen)
     
     ksp(libs.hilt.ksp)
 
