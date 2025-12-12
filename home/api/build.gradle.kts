@@ -34,7 +34,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":navigation:api"))
-
     implementation(libs.bundles.navigation)
 }

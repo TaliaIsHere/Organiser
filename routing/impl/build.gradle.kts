@@ -43,9 +43,9 @@ android {
 dependencies {
     api(project(":routing:api"))
 
-    api(project(":signup:api"))
-    api(project(":navigation:api"))
-    api(project(":home:api"))
+    implementation(project(":signup:api"))
+    implementation(project(":navigation:api"))
+    implementation(project(":home:api"))
     implementation(project(":data:impl"))
 
     implementation(libs.bundles.arrow)
