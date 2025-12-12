@@ -8,9 +8,9 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
@@ -18,7 +18,6 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import app.allulith.navigation.api.Navigator
-import app.allulith.routing.api.ui.RoutingDestination
 import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,9 +33,8 @@ internal class OrganiserActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val backStack = remember {
-                mutableStateListOf<NavKey>(RoutingDestination.Routing)
-            }
+            val organiserViewModel = hiltViewModel<OrganiserViewModel>()
+            val backStack = organiserViewModel.backStack
 
             val navigator = remember(backStack) {
                 NavigatorImpl(backStack)
