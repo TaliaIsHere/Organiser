@@ -6,6 +6,7 @@ import app.allulith.home.api.destinations.home.ui.HomeDestination
 import app.allulith.navigation.api.Navigator
 import app.allulith.routing.api.ui.RoutingDestination
 import app.allulith.routing.impl.routing.ui.RoutingRoute
+import app.allulith.signup.impl.destinations.SignUpDestination
 
 internal fun EntryProviderScope<NavKey>.routingNavigationBuilder(
     navigator: Navigator,
@@ -16,7 +17,7 @@ internal fun EntryProviderScope<NavKey>.routingNavigationBuilder(
                 navigator.addScreen(HomeDestination.Home)
             },
             navigateToSignUp = {
-                TODO()
+                navigator.addScreen(SignUpDestination.Welcome)
             },
         )
     }
