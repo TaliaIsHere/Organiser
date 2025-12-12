@@ -6,9 +6,6 @@ import androidx.compose.ui.text.font.FontWeight
 import app.allulith.ui.impl.R
 
 internal object FontFamilies {
-    val poiretOne = FontFamily(
-        Font(R.font.poiret_one_regular)
-    )
 
     val ptSans = FontFamily(
         Font(R.font.pt_sans_regular),

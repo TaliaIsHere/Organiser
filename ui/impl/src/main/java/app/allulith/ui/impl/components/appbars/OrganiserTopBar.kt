@@ -60,6 +60,16 @@ fun OrganiserTopBar(
 @Composable
 private fun OrganiserTopBarPreview() {
     OrganiserTheme {
-        OrganiserTopBar()
+        OrganiserTopBar(
+            title = "Title",
+            onBack = {},
+            actions = listOf(
+                OrganiserTopBarAction(
+                    contentDescription = "",
+                    image = R.drawable.ic_back,
+                    onClick = {},
+                )
+            ),
+        )
     }
 }
