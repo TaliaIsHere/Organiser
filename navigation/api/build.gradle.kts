@@ -35,4 +35,6 @@ android {
     }
 }
 
-dependencies {}
+dependencies {
+    implementation(libs.bundles.navigation)
+}

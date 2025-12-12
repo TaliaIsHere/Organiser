@@ -3,12 +3,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "app.allulith.home.impl"
+    namespace = "app.allulith.home.api"
     compileSdk {
         version = release(36)
     }
@@ -33,28 +31,10 @@ android {
             jvmTarget = JvmTarget.JVM_11
         }
     }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
-    api(project(":home:api"))
-
-    implementation(project(":data:impl"))
-    implementation(project(":ui:impl"))
     implementation(project(":navigation:api"))
 
-    implementation(libs.bundles.core.ui)
-    implementation(libs.bundles.compose)
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.navigation)
-    implementation(libs.bundles.hilt)
-    implementation(libs.bundles.persistence)
-    implementation(libs.bundles.arrow)
-
-    ksp(libs.hilt.ksp)
-    ksp(libs.bundles.hilt)
-    ksp(libs.room.compiler)
 }
