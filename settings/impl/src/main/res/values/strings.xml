@@ -2,4 +2,5 @@
 <resources>
     <string name="settings_header">Settings</string>
     <string name="settings_description">Manage options throughout the entire application</string>
+    <string name="setting_delete_button">Delete account</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.navigation3.runtime.NavKey
 import app.allulith.navigation.api.Navigator
 import app.allulith.settings.api.ui.SettingsDestination
 import app.allulith.settings.impl.destinations.settings.ui.SettingsRoute
+import app.allulith.signup.impl.destinations.SignUpDestination
 
 internal fun EntryProviderScope<NavKey>.settingsNavigationBuilder(
     navigator: Navigator,
@@ -12,6 +13,7 @@ internal fun EntryProviderScope<NavKey>.settingsNavigationBuilder(
     entry<SettingsDestination.Settings> {
         SettingsRoute(
             onBack = { navigator.removeScreen() },
+            navigateToRouting = { navigator.clearAndAddScreen(SignUpDestination.Welcome) },
         )
     }
 }

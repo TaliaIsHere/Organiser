@@ -1,3 +1,5 @@
 package app.allulith.settings.impl.destinations.settings.domain
 
-internal interface SettingsRepository
+internal interface SettingsRepository {
+    suspend fun deleteAccount()
+}

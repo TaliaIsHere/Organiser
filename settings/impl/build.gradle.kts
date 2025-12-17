@@ -9,6 +9,11 @@ plugins {
 
 android {
     namespace = "app.allulith.settings.impl"
+
+    defaultConfig {
+        minSdk = 34
+    }
+
     compileSdk {
         version = release(36)
     }
@@ -45,6 +50,7 @@ dependencies {
     implementation(project(":data:impl"))
     implementation(project(":ui:impl"))
     implementation(project(":navigation:api"))
+    implementation(project(":signup:api"))
 
     implementation(libs.bundles.core.ui)
     implementation(libs.bundles.compose)
