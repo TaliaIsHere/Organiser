@@ -10,10 +10,21 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TooltipAnchorPosition
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import app.allulith.ui.impl.R
+import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.buttons.OrganiserButton
 import app.allulith.ui.impl.text.OrganiserBodyText
 import app.allulith.ui.impl.text.OrganiserHeaderText
@@ -26,6 +37,7 @@ fun OrganiserScreen(
     description: String? = null,
     primaryAction: OrganiserScreenAction? = null,
     topBarContent: @Composable () -> Unit = {},
+    floatingActionButtonContent: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     Scaffold(
@@ -49,7 +61,8 @@ fun OrganiserScreen(
                     )
                 }
             }
-        }
+        },
+        floatingActionButton = floatingActionButtonContent,
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -68,6 +81,7 @@ fun OrganiserScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
 private fun OrganiserScreenPreview() {
@@ -79,6 +93,28 @@ private fun OrganiserScreenPreview() {
                 onClick = {},
                 text = "Click me!",
             ),
+            topBarContent = {
+                OrganiserTopBar(
+                    onBack = {},
+                )
+            },
+            floatingActionButtonContent = {
+                TooltipBox(
+                    positionProvider =
+                        TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
+                    tooltip = { PlainTooltip { OrganiserBodyText(text = "Add a task") } },
+                    state = rememberTooltipState(),
+                ) {
+                    FloatingActionButton(
+                        onClick = {},
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_close),
+                            contentDescription = null,
+                        )
+                    }
+                }
+            },
             content = {},
         )
     }
