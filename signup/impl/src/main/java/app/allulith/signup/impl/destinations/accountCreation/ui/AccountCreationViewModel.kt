@@ -28,7 +28,7 @@ internal class AccountCreationViewModel @Inject constructor(
     fun onUiEvent(uiEvent: AccountCreation.UiEvent) {
         when (uiEvent) {
             is AccountCreation.UiEvent.OnNameChange -> onNameChange(text = uiEvent.text)
-            AccountCreation.UiEvent.OnCreateAccountTap -> createAccount()
+            AccountCreation.UiEvent.OnCreateAccount -> createAccount()
         }
     }
 

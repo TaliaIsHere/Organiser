@@ -9,7 +9,7 @@ internal object AccountCreation {
 
     sealed class UiEvent {
         data class OnNameChange(val text: String) : UiEvent()
-        data object OnCreateAccountTap : UiEvent()
+        data object OnCreateAccount : UiEvent()
     }
 
     sealed class Event {

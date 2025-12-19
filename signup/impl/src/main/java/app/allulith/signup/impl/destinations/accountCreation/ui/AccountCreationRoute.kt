@@ -1,10 +1,14 @@
 package app.allulith.signup.impl.destinations.accountCreation.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,7 +48,7 @@ private fun AccountCreationScreen(
         primaryAction = OrganiserScreenAction(
             text = stringResource(R.string.signup_account_creation_button_text),
             onClick = {
-                onUiEvent(AccountCreation.UiEvent.OnCreateAccountTap)
+                onUiEvent(AccountCreation.UiEvent.OnCreateAccount)
             },
         )
     ) {
@@ -58,6 +62,15 @@ private fun AccountCreationScreen(
             placeholder = stringResource(R.string.signup_account_creation_text_field_placeholder),
             isError = uiState.error,
             errorText = stringResource(R.string.signup_account_creation_text_field_error),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words,
+                imeAction = ImeAction.Done,
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onUiEvent(AccountCreation.UiEvent.OnCreateAccount)
+                },
+            ),
         )
     }
 }
