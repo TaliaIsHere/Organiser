@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_header">Hello %1$s!</string>
-    <string name="home_description">Lorem ipsum</string>
+    <string name="home_description">Here you can find your goals, tasks and reminders.</string>
     <string name="cd_home_settings">go to settings screen</string>
+    <string name="home_tasks_row_header">Tasks</string>
 </resources>

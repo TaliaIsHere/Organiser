@@ -16,7 +16,7 @@ internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
         )
     }
 
-    entry<TasksDestination.Overview> {
+    entry<TasksDestination.TaskCreation> {
         TODO()
     }
 }

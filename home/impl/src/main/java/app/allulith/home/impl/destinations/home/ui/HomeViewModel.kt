@@ -40,13 +40,20 @@ internal class HomeViewModel @Inject constructor(
 
     fun onUiEvent(uiEvent: Home.UiEvent) {
         when (uiEvent) {
-            Home.UiEvent.OnSettingsTap -> onSettingsTap()
+            Home.UiEvent.OnSettingsTap -> navigateToSettings()
+            Home.UiEvent.OnTasksTap -> navigateToTasks()
         }
     }
 
-    private fun onSettingsTap() {
+    private fun navigateToSettings() {
         viewModelScope.launch {
             eventsChannel.send(Home.Event.NavigateToSettings)
+        }
+    }
+
+    private fun navigateToTasks() {
+        viewModelScope.launch {
+            eventsChannel.send(Home.Event.NavigateToTasks)
         }
     }
 }

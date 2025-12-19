@@ -6,11 +6,15 @@ import app.allulith.home.api.destinations.HomeDestination
 import app.allulith.home.impl.destinations.home.ui.HomeRoute
 import app.allulith.navigation.api.Navigator
 import app.allulith.settings.api.destinations.SettingsDestination
+import app.allulith.tasks.api.destinations.TasksDestination
 
 internal fun EntryProviderScope<NavKey>.homeNavigationBuilder(
     navigator: Navigator,
 ) {
     entry<HomeDestination.Home> {
-        HomeRoute(navigateToSettings = { navigator.addScreen(SettingsDestination.Settings) })
+        HomeRoute(
+            navigateToSettings = { navigator.addScreen(SettingsDestination.Settings) },
+            navigateToTasks = { navigator.addScreen(TasksDestination.Overview) },
+        )
     }
 }

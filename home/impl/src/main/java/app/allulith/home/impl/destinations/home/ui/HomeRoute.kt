@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.allulith.home.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.appbars.OrganiserTopBarAction
+import app.allulith.ui.impl.components.cards.OrganiserRowCard
 import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.theme.OrganiserTheme
 
@@ -16,11 +17,13 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 internal fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToSettings: () -> Unit,
+    navigateToTasks: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.eventsFlow.collect { event ->
             when (event) {
                 Home.Event.NavigateToSettings -> navigateToSettings()
+                Home.Event.NavigateToTasks -> navigateToTasks()
             }
         }
     }
@@ -53,8 +56,20 @@ private fun HomeScreen(
             )
         },
     ) {
-
+        TasksRow(onUiEvent = onUiEvent)
     }
+}
+
+@Composable
+private fun TasksRow(
+    onUiEvent: (Home.UiEvent) -> Unit,
+) {
+    OrganiserRowCard(
+        onClick = {
+            onUiEvent(Home.UiEvent.OnTasksTap)
+        },
+        text = stringResource(R.string.home_tasks_row_header),
+    )
 }
 
 @PreviewLightDark

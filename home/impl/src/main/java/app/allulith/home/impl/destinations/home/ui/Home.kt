@@ -8,9 +8,11 @@ internal object Home {
 
     sealed class UiEvent {
         data object OnSettingsTap : UiEvent()
+        data object OnTasksTap : UiEvent()
     }
 
     sealed class Event {
         data object NavigateToSettings : Event()
+        data object NavigateToTasks : Event()
     }
 }
