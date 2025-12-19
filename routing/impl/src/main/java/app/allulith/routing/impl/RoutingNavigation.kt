@@ -14,10 +14,10 @@ internal fun EntryProviderScope<NavKey>.routingNavigationBuilder(
     entry<RoutingDestination.Routing> {
         RoutingRoute(
             navigateToHome = {
-                navigator.addScreen(HomeDestination.Home)
+                navigator.clearAndAddScreen(HomeDestination.Home)
             },
             navigateToSignUp = {
-                navigator.addScreen(SignUpDestination.Welcome)
+                navigator.clearAndAddScreen(SignUpDestination.Welcome)
             },
         )
     }
