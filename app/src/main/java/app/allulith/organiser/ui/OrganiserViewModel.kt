@@ -3,7 +3,7 @@ package app.allulith.organiser.ui
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation3.runtime.NavKey
-import app.allulith.routing.api.ui.RoutingDestination
+import app.allulith.routing.api.destinations.RoutingDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

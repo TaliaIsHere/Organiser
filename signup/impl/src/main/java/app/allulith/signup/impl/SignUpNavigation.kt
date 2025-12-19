@@ -2,9 +2,9 @@ package app.allulith.signup.impl
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import app.allulith.home.api.destinations.home.ui.HomeDestination
+import app.allulith.home.api.destinations.HomeDestination
 import app.allulith.navigation.api.Navigator
-import app.allulith.signup.impl.destinations.SignUpDestination
+import app.allulith.signup.api.destinations.SignUpDestination
 import app.allulith.signup.impl.destinations.accountCreation.ui.AccountCreationRoute
 import app.allulith.signup.impl.destinations.welcome.ui.WelcomeRoute
 
