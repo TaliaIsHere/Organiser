@@ -4,7 +4,9 @@ import android.content.ClipData
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +23,7 @@ import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.buttons.OrganiserButton
 import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.text.OrganiserBodyText
+import app.allulith.ui.impl.text.OrganiserSubHeaderText
 import app.allulith.ui.impl.theme.OrganiserTheme
 import kotlinx.coroutines.launch
 
@@ -64,9 +67,30 @@ private fun SettingScreen(
                 OrganiserTheme.dimensions.padding.small,
             ),
         ) {
-            DeleteButton(onClick = { onUiEvent(Settings.UiEvent.OnDeleteAccount) })
+            AccountSection(
+                uiState = uiState,
+                onUiEvent = onUiEvent,
+            )
             VersionTag(version = uiState.version)
         }
+    }
+}
+
+@Composable
+private fun AccountSection(
+    uiState: Settings.UiState,
+    onUiEvent: (Settings.UiEvent) -> Unit,
+) {
+    Column {
+        OrganiserSubHeaderText(
+            text = stringResource(R.string.setting_account_header),
+        )
+        Spacer(Modifier.height(OrganiserTheme.dimensions.padding.small))
+        OrganiserBodyText(
+            text = stringResource(R.string.setting_account_description),
+        )
+        Spacer(Modifier.height(OrganiserTheme.dimensions.padding.medium))
+        DeleteButton(onClick = { onUiEvent(Settings.UiEvent.OnDeleteAccount) })
     }
 }
 
