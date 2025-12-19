@@ -57,6 +57,8 @@ private fun HomeScreen(
         },
     ) {
         TasksRow(onUiEvent = onUiEvent)
+        GoalsRow(onUiEvent = onUiEvent)
+        RemindersRow(onUiEvent = onUiEvent)
     }
 }
 
@@ -69,6 +71,30 @@ private fun TasksRow(
             onUiEvent(Home.UiEvent.OnTasksTap)
         },
         text = stringResource(R.string.home_tasks_row_header),
+    )
+}
+
+@Composable
+private fun GoalsRow(
+    onUiEvent: (Home.UiEvent) -> Unit,
+) {
+    OrganiserRowCard(
+        onClick = {
+            onUiEvent(Home.UiEvent.OnGoalsTap)
+        },
+        text = stringResource(R.string.home_goals_row_header),
+    )
+}
+
+@Composable
+private fun RemindersRow(
+    onUiEvent: (Home.UiEvent) -> Unit,
+) {
+    OrganiserRowCard(
+        onClick = {
+            onUiEvent(Home.UiEvent.OnRemindersTap)
+        },
+        text = stringResource(R.string.home_reminders_row_header),
     )
 }
 

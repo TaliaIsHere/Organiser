@@ -9,6 +9,8 @@ internal object Home {
     sealed class UiEvent {
         data object OnSettingsTap : UiEvent()
         data object OnTasksTap : UiEvent()
+        data object OnGoalsTap : UiEvent()
+        data object OnRemindersTap : UiEvent()
     }
 
     sealed class Event {

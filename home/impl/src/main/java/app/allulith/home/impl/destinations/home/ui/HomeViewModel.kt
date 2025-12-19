@@ -42,6 +42,8 @@ internal class HomeViewModel @Inject constructor(
         when (uiEvent) {
             Home.UiEvent.OnSettingsTap -> navigateToSettings()
             Home.UiEvent.OnTasksTap -> navigateToTasks()
+            Home.UiEvent.OnGoalsTap -> TODO()
+            Home.UiEvent.OnRemindersTap -> TODO()
         }
     }
 
