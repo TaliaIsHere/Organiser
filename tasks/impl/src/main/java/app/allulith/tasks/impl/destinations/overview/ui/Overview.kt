@@ -1,4 +1,4 @@
-package app.allulith.tasks.impl.overview.ui
+package app.allulith.tasks.impl.destinations.overview.ui
 
 internal object Overview {
     data class UiState(
@@ -11,6 +11,7 @@ internal object Overview {
     }
 
     sealed class Event {
+        data object NavigateToTaskCreation : Event()
         data object GoBack : Event()
     }
 

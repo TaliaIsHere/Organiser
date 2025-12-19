@@ -1,19 +1,15 @@
 package app.allulith.ui.impl.components.fab
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.PlainTooltip
-import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.allulith.ui.impl.R
@@ -38,7 +34,7 @@ fun OrganiserFloatingActionButton(
         },
         state = rememberTooltipState(),
     ) {
-        FloatingActionButton(
+        LargeFloatingActionButton(
             onClick = onClick,
             containerColor = OrganiserFloatingActionButtonDefaults.containerColor,
             contentColor = OrganiserFloatingActionButtonDefaults.contentColor,

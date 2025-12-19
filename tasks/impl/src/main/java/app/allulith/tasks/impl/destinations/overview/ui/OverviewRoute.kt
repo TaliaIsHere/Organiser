@@ -1,32 +1,37 @@
-package app.allulith.tasks.impl.overview.ui
+package app.allulith.tasks.impl.destinations.overview.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.PlainTooltip
-import androidx.compose.material3.TooltipAnchorPosition
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.allulith.tasks.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.fab.OrganiserFloatingActionButton
 import app.allulith.ui.impl.templates.OrganiserScreen
-import app.allulith.ui.impl.text.OrganiserBodyText
-import app.allulith.ui.impl.text.OrganiserSubHeaderText
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
-internal fun OverviewRoute() {
+internal fun OverviewRoute(
+    goBack: () -> Unit,
+    navigateToTaskCreation: () -> Unit,
+    viewModel: OverviewViewModel = hiltViewModel(),
+) {
+    LaunchedEffect(Unit) {
+        viewModel.eventsFlow.collect { event ->
+            when (event) {
+                Overview.Event.GoBack -> goBack()
+                Overview.Event.NavigateToTaskCreation -> navigateToTaskCreation()
+            }
+        }
+    }
+
     OverviewScreen(
-        uiState = Overview.UiState(),
-        onUiEvent = {},
+        uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+        onUiEvent = viewModel::onUiEvent,
     )
 }
 
