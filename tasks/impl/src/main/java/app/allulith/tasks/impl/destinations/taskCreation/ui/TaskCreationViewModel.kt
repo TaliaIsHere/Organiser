@@ -2,7 +2,8 @@ package app.allulith.tasks.impl.destinations.taskCreation.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.allulith.tasks.impl.destinations.overview.ui.Overview
+import app.allulith.data.impl.OrganiserDatabase
+import app.allulith.data.impl.entity.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
@@ -12,9 +13,13 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 @HiltViewModel
-internal class TaskCreationViewModel @Inject constructor() : ViewModel() {
+internal class TaskCreationViewModel @Inject constructor(
+    private val database: OrganiserDatabase,
+) : ViewModel() {
 
     private val eventsChannel: Channel<TaskCreation.Event> = Channel(BUFFERED)
     val eventsFlow = eventsChannel.receiveAsFlow()
@@ -37,13 +42,23 @@ internal class TaskCreationViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     private fun createTask() {
-        if (_uiState.value.taskTitle.isBlank()) {
+        val uiState = _uiState.value
+        if (uiState.taskTitle.isBlank()) {
             _uiState.update {
                 it.copy(taskTitleError = true)
             }
         } else {
             viewModelScope.launch {
+                database.taskDao().insertAll(
+                    Task(
+                        uid = Uuid.random().toString(),
+                        title = uiState.taskTitle,
+                        description = uiState.taskDescription.ifEmpty { null },
+                    )
+                )
+
                 eventsChannel.send(TaskCreation.Event.GoBack)
             }
         }
