@@ -27,6 +27,16 @@ internal object OrganiserTextDefaults {
             get() = OrganiserTheme.typography.subHeader
     }
 
+    object SmallHeader {
+        val color: Color
+            @Composable
+            get() = OrganiserTheme.colors.onBackground
+
+        val textStyle: TextStyle
+            @Composable
+            get() = OrganiserTheme.typography.smallHeader
+    }
+
     object Body {
         val color: Color
             @Composable

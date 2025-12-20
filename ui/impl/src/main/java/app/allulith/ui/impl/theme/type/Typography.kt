@@ -17,6 +17,12 @@ internal val typography = OrganiserTypography(
         fontFamily = FontFamilies.playfairDisplay,
         lineHeight = 32.sp,
     ),
+    smallHeader = TextStyle(
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Normal,
+        fontFamily = FontFamilies.playfairDisplay,
+        lineHeight = 26.sp,
+    ),
     body = TextStyle(
         fontSize = 14.sp,
         fontWeight = FontWeight.Normal,

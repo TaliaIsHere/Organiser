@@ -24,6 +24,7 @@ internal class OverviewViewModel @Inject constructor() : ViewModel() {
         when (uiEvent) {
             Overview.UiEvent.OnAddTask -> addTask()
             Overview.UiEvent.OnBack -> onBack()
+            is Overview.UiEvent.OnViewTask -> viewTask()
         }
     }
 
@@ -36,6 +37,12 @@ internal class OverviewViewModel @Inject constructor() : ViewModel() {
     private fun onBack() {
         viewModelScope.launch {
             eventsChannel.send(Overview.Event.GoBack)
+        }
+    }
+
+    private fun viewTask() {
+        viewModelScope.launch {
+            TODO()
         }
     }
 }
