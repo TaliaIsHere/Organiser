@@ -5,6 +5,8 @@ import androidx.navigation3.runtime.NavKey
 import app.allulith.navigation.api.Navigator
 import app.allulith.tasks.api.destinations.TasksDestination
 import app.allulith.tasks.impl.destinations.overview.ui.OverviewRoute
+import app.allulith.tasks.impl.destinations.taskCreation.ui.TaskCreationRoute
+import app.allulith.tasks.impl.destinations.taskDetail.ui.TaskDetailRoute
 
 internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
     navigator: Navigator,
@@ -17,6 +19,10 @@ internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
     }
 
     entry<TasksDestination.TaskCreation> {
-        TODO()
+        TaskCreationRoute()
+    }
+
+    entry<TasksDestination.TaskDetail> { entry ->
+        TaskDetailRoute()
     }
 }
