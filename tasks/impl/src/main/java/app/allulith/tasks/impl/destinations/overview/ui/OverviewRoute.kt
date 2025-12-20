@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.allulith.tasks.api.domain.Task
 import app.allulith.tasks.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.cards.OrganiserCustomCard
@@ -29,15 +30,14 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 @Composable
 internal fun OverviewRoute(
     goBack: () -> Unit,
-    navigateToTaskCreation: () -> Unit,
+    navigateToTaskCreation: (Task?) -> Unit,
     viewModel: OverviewViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
         viewModel.eventsFlow.collect { event ->
             when (event) {
                 Overview.Event.GoBack -> goBack()
-                Overview.Event.NavigateToTaskCreation -> navigateToTaskCreation()
-                is Overview.Event.GoToTask -> TODO()
+                is Overview.Event.NavigateToTaskCreation -> navigateToTaskCreation(event.task)
             }
         }
     }
@@ -116,7 +116,7 @@ private fun Tasks(
             TaskCard(
                 task = task,
                 onTaskClick = {
-                    onUiEvent(Overview.UiEvent.OnViewTask(id = task.id))
+                    onUiEvent(Overview.UiEvent.OnViewTask(task = task))
                 },
             )
         }
@@ -125,7 +125,7 @@ private fun Tasks(
 
 @Composable
 private fun TaskCard(
-    task: Overview.Task,
+    task: Task,
     onTaskClick: () -> Unit,
 ) {
     OrganiserCustomCard(
@@ -180,12 +180,12 @@ private fun OverviewScreenTasksPreview() {
             uiState = Overview.UiState(
                 tasks = Overview.TasksStructure.Tasks(
                     listOf(
-                        Overview.Task(
+                        Task(
                             id = "1",
                             title = "Take medication",
                             description = "Take 2 pills",
                         ),
-                        Overview.Task(
+                        Task(
                             id = "2",
                             title = "Walk doggo",
                             description = null,

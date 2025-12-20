@@ -8,6 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.allulith.tasks.api.domain.Task
 import app.allulith.tasks.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.textfields.OrganiserTextField
@@ -17,8 +18,13 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
 internal fun TaskCreationRoute(
+    task: Task?,
     goBack: () -> Unit,
-    viewModel: TaskCreationViewModel = hiltViewModel(),
+    viewModel: TaskCreationViewModel = hiltViewModel(
+        creationCallback = { factory: TaskCreationViewModel.Factory ->
+            factory.create(task)
+        }
+    ),
 ) {
     LaunchedEffect(Unit) {
         viewModel.eventsFlow.collect { event ->
@@ -84,7 +90,11 @@ private fun TaskCreationScreen(
 private fun TaskCreationScreenPreview() {
     OrganiserTheme {
         TaskCreationScreen(
-            uiState = TaskCreation.UiState(),
+            uiState = TaskCreation.UiState(
+                taskTitle = "",
+                taskDescription = "",
+                taskState = TaskCreation.TaskState.New,
+            ),
             onUiEvent = {},
         )
     }

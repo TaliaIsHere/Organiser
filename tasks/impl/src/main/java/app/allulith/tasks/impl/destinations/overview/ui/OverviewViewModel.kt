@@ -3,6 +3,7 @@ package app.allulith.tasks.impl.destinations.overview.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.allulith.data.impl.OrganiserDatabase
+import app.allulith.tasks.api.domain.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
@@ -37,7 +38,7 @@ internal class OverviewViewModel @Inject constructor(
                     it.copy(
                         tasks = Overview.TasksStructure.Tasks(
                             tasks = existingTasks.map { existingTask ->
-                                Overview.Task(
+                                Task(
                                     id = existingTask.uid,
                                     title = existingTask.title,
                                     description = existingTask.description,
@@ -58,13 +59,13 @@ internal class OverviewViewModel @Inject constructor(
         when (uiEvent) {
             Overview.UiEvent.OnAddTask -> addTask()
             Overview.UiEvent.OnBack -> onBack()
-            is Overview.UiEvent.OnViewTask -> viewTask()
+            is Overview.UiEvent.OnViewTask -> viewTask(task = uiEvent.task)
         }
     }
 
     private fun addTask() {
         viewModelScope.launch {
-            eventsChannel.send(Overview.Event.NavigateToTaskCreation)
+            eventsChannel.send(Overview.Event.NavigateToTaskCreation(task = null))
         }
     }
 
@@ -74,9 +75,9 @@ internal class OverviewViewModel @Inject constructor(
         }
     }
 
-    private fun viewTask() {
+    private fun viewTask(task: Task) {
         viewModelScope.launch {
-            TODO()
+            eventsChannel.send(Overview.Event.NavigateToTaskCreation(task = task))
         }
     }
 }

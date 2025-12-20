@@ -6,7 +6,6 @@ import app.allulith.navigation.api.Navigator
 import app.allulith.tasks.api.destinations.TasksDestination
 import app.allulith.tasks.impl.destinations.overview.ui.OverviewRoute
 import app.allulith.tasks.impl.destinations.taskCreation.ui.TaskCreationRoute
-import app.allulith.tasks.impl.destinations.taskDetail.ui.TaskDetailRoute
 
 internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
     navigator: Navigator,
@@ -14,17 +13,16 @@ internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
     entry<TasksDestination.Overview> {
         OverviewRoute(
             goBack = { navigator.pop() },
-            navigateToTaskCreation = { navigator.addScreen(TasksDestination.TaskCreation) },
+            navigateToTaskCreation = { task ->
+                navigator.addScreen(TasksDestination.TaskCreation(task = task))
+            },
         )
     }
 
     entry<TasksDestination.TaskCreation> {
         TaskCreationRoute(
+            task = it.task,
             goBack = { navigator.pop() },
         )
-    }
-
-    entry<TasksDestination.TaskDetail> { entry ->
-        TaskDetailRoute()
     }
 }

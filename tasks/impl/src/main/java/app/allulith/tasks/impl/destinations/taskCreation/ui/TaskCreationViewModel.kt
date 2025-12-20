@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.allulith.data.impl.OrganiserDatabase
 import app.allulith.data.impl.entity.Task
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
@@ -12,19 +15,30 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
+import app.allulith.tasks.api.domain.Task as DomainTask
 
-@HiltViewModel
-internal class TaskCreationViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = TaskCreationViewModel.Factory::class)
+internal class TaskCreationViewModel @AssistedInject constructor(
+    @Assisted val task: DomainTask?,
     private val database: OrganiserDatabase,
 ) : ViewModel() {
 
     private val eventsChannel: Channel<TaskCreation.Event> = Channel(BUFFERED)
     val eventsFlow = eventsChannel.receiveAsFlow()
 
-    private val _uiState: MutableStateFlow<TaskCreation.UiState> = MutableStateFlow(TaskCreation.UiState())
+    private val _uiState: MutableStateFlow<TaskCreation.UiState> = MutableStateFlow(
+        TaskCreation.UiState(
+            taskTitle = task?.title ?: "",
+            taskDescription = task?.description ?: "",
+            taskState = if (task != null) {
+                TaskCreation.TaskState.Edit
+            } else {
+                TaskCreation.TaskState.New
+            }
+        )
+    )
     val uiState = _uiState.asStateFlow()
 
     fun onUiEvent(uiEvent: TaskCreation.UiEvent) {
@@ -77,5 +91,10 @@ internal class TaskCreationViewModel @Inject constructor(
                 taskTitleError = false,
             )
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(task: DomainTask?): TaskCreationViewModel
     }
 }
