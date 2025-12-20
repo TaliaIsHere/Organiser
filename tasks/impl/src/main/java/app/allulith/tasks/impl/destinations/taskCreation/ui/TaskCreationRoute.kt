@@ -11,6 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.allulith.tasks.api.domain.Task
 import app.allulith.tasks.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
+import app.allulith.ui.impl.components.appbars.OrganiserTopBarAction
 import app.allulith.ui.impl.components.textfields.OrganiserTextField
 import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.templates.OrganiserScreenAction
@@ -45,6 +46,63 @@ private fun TaskCreationScreen(
     uiState: TaskCreation.UiState,
     onUiEvent: (TaskCreation.UiEvent) -> Unit,
 ) {
+    when (uiState.taskState) {
+        TaskCreation.TaskState.Edit -> {
+            EditSection(
+                uiState = uiState,
+                onUiEvent = onUiEvent,
+            )
+        }
+        TaskCreation.TaskState.New -> {
+            NewSection(
+                uiState = uiState,
+                onUiEvent = onUiEvent,
+            )
+        }
+    }
+}
+
+@Composable
+private fun EditSection(
+    uiState: TaskCreation.UiState,
+    onUiEvent: (TaskCreation.UiEvent) -> Unit,
+) {
+    OrganiserScreen(
+        header = stringResource(R.string.task_creation_edit_header),
+        description = stringResource(R.string.task_creation_edit_description),
+        primaryAction = OrganiserScreenAction(
+            onClick = {
+                onUiEvent(TaskCreation.UiEvent.OnUpdateTaskTap)
+            },
+            text = stringResource(R.string.task_creation_edit_action_text),
+        ),
+        topBarContent = {
+            OrganiserTopBar(
+                onBack = {
+                    onUiEvent(TaskCreation.UiEvent.OnBackTap)
+                },
+                actions = listOf(
+                    OrganiserTopBarAction(
+                        contentDescription = stringResource(R.string.task_creation_delete_content_description),
+                        image = R.drawable.ic_delete,
+                        onClick = { onUiEvent(TaskCreation.UiEvent.OnDeleteTap) },
+                    )
+                ),
+            )
+        },
+    ) {
+        Content(
+            uiState = uiState,
+            onUiEvent = onUiEvent,
+        )
+    }
+}
+
+@Composable
+private fun NewSection(
+    uiState: TaskCreation.UiState,
+    onUiEvent: (TaskCreation.UiEvent) -> Unit,
+) {
     OrganiserScreen(
         header = stringResource(R.string.task_creation_header),
         description = stringResource(R.string.task_creation_description),
@@ -62,27 +120,38 @@ private fun TaskCreationScreen(
             )
         },
     ) {
-        OrganiserTextField(
-            text = uiState.taskTitle,
-            onValueChange = { text ->
-                onUiEvent(TaskCreation.UiEvent.OnTitleChange(text = text))
-            },
-            modifier = Modifier.fillMaxWidth(),
-            label = stringResource(R.string.task_creation_title_text_field_label),
-            placeholder = "",
-            isError = uiState.taskTitleError,
-            errorText = stringResource(R.string.task_creation_title_error_text),
-        )
-        OrganiserTextField(
-            text = uiState.taskDescription,
-            onValueChange = { text ->
-                onUiEvent(TaskCreation.UiEvent.OnDescriptionChange(text = text))
-            },
-            modifier = Modifier.fillMaxWidth(),
-            label = stringResource(R.string.task_creation_description_text_field_label),
-            placeholder = "",
+        Content(
+            uiState = uiState,
+            onUiEvent = onUiEvent,
         )
     }
+}
+
+@Composable
+private fun Content(
+    uiState: TaskCreation.UiState,
+    onUiEvent: (TaskCreation.UiEvent) -> Unit,
+) {
+    OrganiserTextField(
+        text = uiState.taskTitle,
+        onValueChange = { text ->
+            onUiEvent(TaskCreation.UiEvent.OnTitleChange(text = text))
+        },
+        modifier = Modifier.fillMaxWidth(),
+        label = stringResource(R.string.task_creation_title_text_field_label),
+        placeholder = "",
+        isError = uiState.taskTitleError,
+        errorText = stringResource(R.string.task_creation_title_error_text),
+    )
+    OrganiserTextField(
+        text = uiState.taskDescription,
+        onValueChange = { text ->
+            onUiEvent(TaskCreation.UiEvent.OnDescriptionChange(text = text))
+        },
+        modifier = Modifier.fillMaxWidth(),
+        label = stringResource(R.string.task_creation_description_text_field_label),
+        placeholder = "",
+    )
 }
 
 @PreviewLightDark

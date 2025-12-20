@@ -18,7 +18,9 @@ internal object TaskCreation {
         data class OnTitleChange(val text: String) : UiEvent()
         data class OnDescriptionChange(val text: String) : UiEvent()
         data object OnCreateTaskTap : UiEvent()
+        data object OnUpdateTaskTap : UiEvent()
         data object OnBackTap : UiEvent()
+        data object OnDeleteTap : UiEvent()
     }
 
     sealed class Event {

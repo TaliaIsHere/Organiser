@@ -32,10 +32,10 @@ internal class TaskCreationViewModel @AssistedInject constructor(
         TaskCreation.UiState(
             taskTitle = task?.title ?: "",
             taskDescription = task?.description ?: "",
-            taskState = if (task != null) {
-                TaskCreation.TaskState.Edit
-            } else {
+            taskState = if (task == null) {
                 TaskCreation.TaskState.New
+            } else {
+                TaskCreation.TaskState.Edit
             }
         )
     )
@@ -47,6 +47,8 @@ internal class TaskCreationViewModel @AssistedInject constructor(
             TaskCreation.UiEvent.OnCreateTaskTap -> createTask()
             is TaskCreation.UiEvent.OnDescriptionChange -> onDescriptionChange(text = uiEvent.text)
             is TaskCreation.UiEvent.OnTitleChange -> onTitleChange(text = uiEvent.text)
+            TaskCreation.UiEvent.OnDeleteTap -> deleteTask()
+            TaskCreation.UiEvent.OnUpdateTaskTap -> updateTask()
         }
     }
 
@@ -90,6 +92,37 @@ internal class TaskCreationViewModel @AssistedInject constructor(
                 taskTitle = text,
                 taskTitleError = false,
             )
+        }
+    }
+
+    private fun deleteTask() {
+        viewModelScope.launch {
+            if (task != null) {
+                database.taskDao().delete(uid = task.id)
+                eventsChannel.send(TaskCreation.Event.GoBack)
+            }
+        }
+    }
+
+    private fun updateTask() {
+        val uiState = _uiState.value
+        if (task != null) {
+            if (uiState.taskTitle.isBlank()) {
+                _uiState.update {
+                    it.copy(taskTitleError = true)
+                }
+            } else {
+                viewModelScope.launch {
+                    database.taskDao().update(
+                        Task(
+                            uid = task.id,
+                            title = uiState.taskTitle,
+                            description = uiState.taskDescription.ifEmpty { null },
+                        )
+                    )
+                    eventsChannel.send(TaskCreation.Event.GoBack)
+                }
+            }
         }
     }
 

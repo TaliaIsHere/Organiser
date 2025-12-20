@@ -1,10 +1,10 @@
 package app.allulith.data.impl.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import app.allulith.data.impl.entity.Task
 import kotlinx.coroutines.flow.Flow
 
@@ -17,6 +17,9 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg tasks: Task)
 
-    @Delete
-    suspend fun delete(task: Task)
+    @Update
+    suspend fun update(task: Task)
+
+    @Query("DELETE FROM task WHERE uid = :uid")
+    suspend fun delete(uid: String)
 }
