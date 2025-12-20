@@ -13,13 +13,15 @@ internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
 ) {
     entry<TasksDestination.Overview> {
         OverviewRoute(
-            goBack = { navigator.removeScreen() },
+            goBack = { navigator.pop() },
             navigateToTaskCreation = { navigator.addScreen(TasksDestination.TaskCreation) },
         )
     }
 
     entry<TasksDestination.TaskCreation> {
-        TaskCreationRoute()
+        TaskCreationRoute(
+            goBack = { navigator.pop() },
+        )
     }
 
     entry<TasksDestination.TaskDetail> { entry ->

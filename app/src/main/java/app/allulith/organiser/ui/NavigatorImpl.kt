@@ -9,7 +9,7 @@ internal class NavigatorImpl(private val backstack: SnapshotStateList<NavKey>) :
         backstack.add(key)
     }
 
-    override fun removeScreen() {
+    override fun pop() {
         backstack.removeLastOrNull()
     }
 

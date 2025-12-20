@@ -2,9 +2,10 @@ package app.allulith.tasks.impl.destinations.taskDetail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
-fun TaskDetailRoute() {
+internal fun TaskDetailRoute() {
     TaskDetailScreen()
 }
 
@@ -16,5 +17,7 @@ private fun TaskDetailScreen() {
 @PreviewLightDark
 @Composable
 private fun TaskDetailScreenPreview() {
-
+    OrganiserTheme {
+        TaskDetailScreen()
+    }
 }

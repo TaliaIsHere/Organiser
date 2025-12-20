@@ -1,12 +1,12 @@
 package app.allulith.ui.impl.components.textfields
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -49,7 +49,9 @@ fun OrganiserTextField(
             shape = OrganiserTextFieldDefaults.shape,
             colors = OrganiserTextFieldDefaults.colors,
         )
-        if (isError) {
+        AnimatedVisibility(
+            visible = isError,
+        ) {
             OrganiserErrorText(
                 text = errorText,
             )

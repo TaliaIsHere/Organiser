@@ -4,6 +4,6 @@ import androidx.navigation3.runtime.NavKey
 
 interface Navigator {
     fun addScreen(key: NavKey)
-    fun removeScreen()
+    fun pop()
     fun clearAndAddScreen(key: NavKey)
 }

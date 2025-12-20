@@ -7,4 +7,10 @@
     <string name="overview_subheader_no_tasks">No tasks</string>
     <string name="overview_description_no_tasks">Tap the big plus icon to get started and add your first task</string>
     <string name="overview_subheader_tasks">Your upcoming tasks</string>
+
+    <string name="task_creation_header">Create a task</string>
+    <string name="task_creation_description">Here you can create a task to track anything you need to track</string>
+    <string name="task_creation_title_text_field_label">Title</string>
+    <string name="task_creation_description_text_field_label">Description (Optional)</string>
+    <string name="task_creation_action_text">Create task</string>
 </resources>

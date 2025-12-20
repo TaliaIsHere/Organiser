@@ -12,7 +12,7 @@ internal fun EntryProviderScope<NavKey>.settingsNavigationBuilder(
 ) {
     entry<SettingsDestination.Settings> {
         SettingsRoute(
-            onBack = { navigator.removeScreen() },
+            onBack = { navigator.pop() },
             navigateToRouting = { navigator.clearAndAddScreen(SignUpDestination.Welcome) },
         )
     }
