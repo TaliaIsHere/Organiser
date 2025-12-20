@@ -11,6 +11,7 @@
     <string name="task_creation_header">Create a task</string>
     <string name="task_creation_description">Here you can create a task to track anything you need to track</string>
     <string name="task_creation_title_text_field_label">Title</string>
+    <string name="task_creation_title_error_text">You must provide a title</string>
     <string name="task_creation_description_text_field_label">Description (Optional)</string>
     <string name="task_creation_action_text">Create task</string>
 </resources>

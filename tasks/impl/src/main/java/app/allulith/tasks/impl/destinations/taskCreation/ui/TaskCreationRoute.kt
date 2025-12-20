@@ -8,7 +8,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import app.allulith.tasks.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.textfields.OrganiserTextField
@@ -66,6 +65,7 @@ private fun TaskCreationScreen(
             label = stringResource(R.string.task_creation_title_text_field_label),
             placeholder = "",
             isError = uiState.taskTitleError,
+            errorText = stringResource(R.string.task_creation_title_error_text),
         )
         OrganiserTextField(
             text = uiState.taskDescription,
