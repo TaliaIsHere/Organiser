@@ -11,8 +11,4 @@ internal object AccountCreation {
         data class OnNameChange(val text: String) : UiEvent()
         data object OnCreateAccount : UiEvent()
     }
-
-    sealed class Event {
-        data object NavigateToHome : Event()
-    }
 }

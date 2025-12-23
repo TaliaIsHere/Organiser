@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -12,6 +12,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavKey
 import app.allulith.signup.impl.R
 import app.allulith.ui.impl.components.textfields.OrganiserTextField
 import app.allulith.ui.impl.templates.OrganiserScreen
@@ -20,17 +21,13 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
 internal fun AccountCreationRoute(
-    navigateToHome: () -> Unit,
-    viewModel: AccountCreationViewModel = hiltViewModel(),
+    backStack: SnapshotStateList<NavKey>,
+    viewModel: AccountCreationViewModel = hiltViewModel(
+        creationCallback = { factory: AccountCreationViewModel.Factory ->
+            factory.create(backStack = backStack)
+        },
+    ),
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.eventsFlow.collect { event ->
-            when (event) {
-                AccountCreation.Event.NavigateToHome -> navigateToHome()
-            }
-        }
-    }
-
     AccountCreationScreen(
         uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
         onUiEvent = viewModel::onUiEvent,

@@ -1,9 +1,16 @@
 package app.allulith.signup.impl.destinations.accountCreation.ui
 
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.Navigator
+import androidx.navigation3.runtime.NavKey
+import app.allulith.home.api.destinations.HomeDestination
 import app.allulith.signup.impl.destinations.accountCreation.domain.AccountCreationRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,16 +21,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Stable
-@HiltViewModel
-internal class AccountCreationViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = AccountCreationViewModel.Factory::class)
+internal class AccountCreationViewModel @AssistedInject constructor(
+    @Assisted private val backStack: SnapshotStateList<NavKey>,
     private val repository: AccountCreationRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AccountCreation.UiState())
     val uiState = _uiState.asStateFlow()
-
-    private val eventsChannel: Channel<AccountCreation.Event> = Channel(Channel.BUFFERED)
-    val eventsFlow = eventsChannel.receiveAsFlow()
 
     fun onUiEvent(uiEvent: AccountCreation.UiEvent) {
         when (uiEvent) {
@@ -48,9 +53,14 @@ internal class AccountCreationViewModel @Inject constructor(
         } else {
             viewModelScope.launch {
                 repository.createUser(name = name)
-                eventsChannel.send(AccountCreation.Event.NavigateToHome)
+                backStack.clear()
+                backStack.add(HomeDestination.Home)
             }
-
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(backStack: SnapshotStateList<NavKey>): AccountCreationViewModel
     }
 }
