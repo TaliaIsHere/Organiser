@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavKey
 import app.allulith.settings.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.buttons.OrganiserButton
@@ -29,19 +30,13 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun SettingsRoute(
-    viewModel: SettingsViewModel = hiltViewModel(),
-    onBack: () -> Unit,
-    navigateToRouting: () -> Unit,
+    backStack: SnapshotStateList<NavKey>,
+    viewModel: SettingsViewModel = hiltViewModel(
+        creationCallback = { factory: SettingsViewModel.Factory ->
+            factory.create(backStack = backStack)
+        },
+    ),
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.eventsFlow.collect { event ->
-            when (event) {
-                Settings.Event.GoBack -> onBack()
-                Settings.Event.NavigateToRouting -> navigateToRouting()
-            }
-        }
-    }
-
     SettingScreen(
         uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
         onUiEvent = viewModel::onUiEvent,
@@ -67,10 +62,7 @@ private fun SettingScreen(
                 OrganiserTheme.dimensions.padding.small,
             ),
         ) {
-            AccountSection(
-                uiState = uiState,
-                onUiEvent = onUiEvent,
-            )
+            AccountSection(onUiEvent = onUiEvent)
             VersionTag(version = uiState.version)
         }
     }
@@ -78,7 +70,6 @@ private fun SettingScreen(
 
 @Composable
 private fun AccountSection(
-    uiState: Settings.UiState,
     onUiEvent: (Settings.UiEvent) -> Unit,
 ) {
     Column {

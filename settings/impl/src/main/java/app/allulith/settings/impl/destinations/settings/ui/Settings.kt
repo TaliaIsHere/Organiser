@@ -10,9 +10,4 @@ internal object Settings {
         data object OnBack : UiEvent()
         data object OnDeleteAccount : UiEvent()
     }
-
-    sealed class Event {
-        data object GoBack : Event()
-        data object NavigateToRouting : Event()
-    }
 }

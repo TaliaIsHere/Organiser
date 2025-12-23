@@ -2,28 +2,28 @@ package app.allulith.settings.impl.destinations.settings.ui
 
 import android.content.Context
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation3.runtime.NavKey
 import app.allulith.settings.impl.destinations.settings.domain.SettingsRepository
+import app.allulith.signup.api.destinations.SignUpDestination
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-
 
 @Stable
-@HiltViewModel
-internal class SettingsViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = SettingsViewModel.Factory::class)
+internal class SettingsViewModel @AssistedInject constructor(
+    @Assisted private val backStack: SnapshotStateList<NavKey>,
     @param:ApplicationContext val context: Context,
     private val repository: SettingsRepository,
 ) : ViewModel() {
-
-    private val eventsChannel: Channel<Settings.Event> = Channel(Channel.BUFFERED)
-    val eventsFlow = eventsChannel.receiveAsFlow()
 
     private val _uiState = MutableStateFlow(
         Settings.UiState(
@@ -41,15 +41,14 @@ internal class SettingsViewModel @Inject constructor(
     }
 
     private fun goBack() {
-        viewModelScope.launch {
-            eventsChannel.send(Settings.Event.GoBack)
-        }
+        backStack.removeLastOrNull()
     }
 
     private fun deleteAccount() {
         viewModelScope.launch {
             repository.deleteAccount()
-            eventsChannel.send(Settings.Event.NavigateToRouting)
+            backStack.clear()
+            backStack.add(SignUpDestination.Welcome)
         }
     }
 
@@ -63,5 +62,10 @@ internal class SettingsViewModel @Inject constructor(
         } catch (_: Exception) {
             return null
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(backStack: SnapshotStateList<NavKey>): SettingsViewModel
     }
 }
