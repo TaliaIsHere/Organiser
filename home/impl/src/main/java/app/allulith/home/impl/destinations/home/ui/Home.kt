@@ -12,9 +12,4 @@ internal object Home {
         data object OnGoalsTap : UiEvent()
         data object OnRemindersTap : UiEvent()
     }
-
-    sealed class Event {
-        data object NavigateToSettings : Event()
-        data object NavigateToTasks : Event()
-    }
 }

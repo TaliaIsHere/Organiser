@@ -1,9 +1,16 @@
 package app.allulith.home.impl.destinations.home.ui
 
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation3.runtime.NavKey
 import app.allulith.home.impl.destinations.home.domain.HomeRepository
+import app.allulith.settings.api.destinations.SettingsDestination
+import app.allulith.tasks.api.destinations.TasksDestination
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
@@ -15,16 +22,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Stable
-@HiltViewModel
-internal class HomeViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = HomeViewModel.Factory::class)
+internal class HomeViewModel @AssistedInject constructor(
+    @Assisted val backStack: SnapshotStateList<NavKey>,
     private val repository: HomeRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(Home.UiState())
     val uiState = _uiState.asStateFlow()
-
-    private val eventsChannel: Channel<Home.Event> = Channel(BUFFERED)
-    val eventsFlow = eventsChannel.receiveAsFlow()
 
     init {
         personalizeHome()
@@ -48,14 +53,15 @@ internal class HomeViewModel @Inject constructor(
     }
 
     private fun navigateToSettings() {
-        viewModelScope.launch {
-            eventsChannel.send(Home.Event.NavigateToSettings)
-        }
+        backStack.add(SettingsDestination.Settings)
     }
 
     private fun navigateToTasks() {
-        viewModelScope.launch {
-            eventsChannel.send(Home.Event.NavigateToTasks)
-        }
+        backStack.add(TasksDestination.Overview)
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(backStack: SnapshotStateList<NavKey>): HomeViewModel
     }
 }

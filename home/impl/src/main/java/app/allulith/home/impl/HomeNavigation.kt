@@ -12,9 +12,6 @@ internal fun EntryProviderScope<NavKey>.homeNavigationBuilder(
     backStack: SnapshotStateList<NavKey>,
 ) {
     entry<HomeDestination.Home> {
-        HomeRoute(
-            navigateToSettings = { backStack.add(SettingsDestination.Settings) },
-            navigateToTasks = { backStack.add(TasksDestination.Overview) },
-        )
+        HomeRoute(backStack = backStack)
     }
 }

@@ -1,11 +1,12 @@
 package app.allulith.home.impl.destinations.home.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavKey
 import app.allulith.home.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.appbars.OrganiserTopBarAction
@@ -15,19 +16,13 @@ import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
 internal fun HomeRoute(
-    viewModel: HomeViewModel = hiltViewModel(),
-    navigateToSettings: () -> Unit,
-    navigateToTasks: () -> Unit,
-) {
-    LaunchedEffect(Unit) {
-        viewModel.eventsFlow.collect { event ->
-            when (event) {
-                Home.Event.NavigateToSettings -> navigateToSettings()
-                Home.Event.NavigateToTasks -> navigateToTasks()
-            }
+    backStack: SnapshotStateList<NavKey>,
+    viewModel: HomeViewModel = hiltViewModel(
+        creationCallback = { factory: HomeViewModel.Factory ->
+            factory.create(backStack)
         }
-    }
-
+    ),
+) {
     HomeScreen(
         uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
         onUiEvent = viewModel::onUiEvent,
