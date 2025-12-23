@@ -1,8 +1,8 @@
 package app.allulith.tasks.impl.di
 
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import app.allulith.navigation.api.Navigator
 import app.allulith.tasks.impl.tasksNavigationBuilder
 import dagger.Module
 import dagger.Provides
@@ -16,7 +16,7 @@ internal object TasksNavigationModule {
 
     @IntoSet
     @Provides
-    fun providesTasksNavigation() : EntryProviderScope<NavKey>.(Navigator) -> Unit = { navigator ->
-        tasksNavigationBuilder(navigator = navigator)
+    fun providesTasksNavigation() : EntryProviderScope<NavKey>.(SnapshotStateList<NavKey>) -> Unit = { backStack ->
+        tasksNavigationBuilder(backStack = backStack)
     }
 }

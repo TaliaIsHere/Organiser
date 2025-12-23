@@ -44,7 +44,6 @@ dependencies {
 
     implementation(project(":data:impl"))
     implementation(project(":ui:impl"))
-    implementation(project(":navigation:api"))
     implementation(project(":settings:api"))
     implementation(project(":tasks:api"))
 

@@ -8,7 +8,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -17,7 +17,6 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import app.allulith.navigation.api.Navigator
 import app.allulith.ui.impl.theme.OrganiserTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -26,7 +25,7 @@ import javax.inject.Inject
 internal class OrganiserActivity : ComponentActivity() {
 
     @Inject
-    lateinit var entryBuilders: Set<@JvmSuppressWildcards EntryProviderScope<NavKey>.(Navigator) -> Unit>
+    lateinit var entryBuilders: Set<@JvmSuppressWildcards EntryProviderScope<NavKey>.(SnapshotStateList<NavKey>) -> Unit>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +34,6 @@ internal class OrganiserActivity : ComponentActivity() {
         setContent {
             val organiserViewModel = hiltViewModel<OrganiserViewModel>()
             val backStack = organiserViewModel.backStack
-
-            val navigator = remember(backStack) {
-                NavigatorImpl(backStack)
-            }
 
             OrganiserTheme {
                 NavDisplay(
@@ -51,7 +46,7 @@ internal class OrganiserActivity : ComponentActivity() {
                     ),
                     entryProvider = entryProvider {
                         entryBuilders.forEach { builderFactory ->
-                            builderFactory(navigator)
+                            builderFactory(backStack)
                         }
                     },
                     transitionSpec = {

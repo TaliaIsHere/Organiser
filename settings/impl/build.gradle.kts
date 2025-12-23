@@ -49,7 +49,6 @@ dependencies {
 
     implementation(project(":data:impl"))
     implementation(project(":ui:impl"))
-    implementation(project(":navigation:api"))
     implementation(project(":signup:api"))
 
     implementation(libs.bundles.core.ui)

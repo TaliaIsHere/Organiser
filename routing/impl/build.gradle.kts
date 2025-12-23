@@ -44,7 +44,6 @@ dependencies {
     api(project(":routing:api"))
 
     implementation(project(":signup:api"))
-    implementation(project(":navigation:api"))
     implementation(project(":home:api"))
     implementation(project(":data:impl"))
 

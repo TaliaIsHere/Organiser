@@ -1,20 +1,20 @@
 package app.allulith.signup.impl
 
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import app.allulith.home.api.destinations.HomeDestination
-import app.allulith.navigation.api.Navigator
 import app.allulith.signup.api.destinations.SignUpDestination
 import app.allulith.signup.impl.destinations.accountCreation.ui.AccountCreationRoute
 import app.allulith.signup.impl.destinations.welcome.ui.WelcomeRoute
 
 internal fun EntryProviderScope<NavKey>.signUpNavigation(
-    navigator: Navigator,
+    backStack: SnapshotStateList<NavKey>,
 ) {
     entry<SignUpDestination.Welcome> {
         WelcomeRoute(
             onContinue = {
-                navigator.addScreen(SignUpDestination.AccountCreation)
+                backStack.add(SignUpDestination.AccountCreation)
             },
         )
     }
@@ -22,7 +22,8 @@ internal fun EntryProviderScope<NavKey>.signUpNavigation(
     entry<SignUpDestination.AccountCreation> {
         AccountCreationRoute(
             navigateToHome = {
-                navigator.addScreen(HomeDestination.Home)
+                backStack.clear()
+                backStack.add(HomeDestination.Home)
             },
         )
     }

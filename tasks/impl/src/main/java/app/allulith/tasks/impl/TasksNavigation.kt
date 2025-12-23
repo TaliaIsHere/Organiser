@@ -1,20 +1,20 @@
 package app.allulith.tasks.impl
 
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import app.allulith.navigation.api.Navigator
 import app.allulith.tasks.api.destinations.TasksDestination
 import app.allulith.tasks.impl.destinations.overview.ui.OverviewRoute
 import app.allulith.tasks.impl.destinations.taskCreation.ui.TaskCreationRoute
 
 internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
-    navigator: Navigator,
+    backStack: SnapshotStateList<NavKey>,
 ) {
     entry<TasksDestination.Overview> {
         OverviewRoute(
-            goBack = { navigator.pop() },
+            goBack = { backStack.removeLastOrNull() },
             navigateToTaskCreation = { task ->
-                navigator.addScreen(TasksDestination.TaskCreation(task = task))
+                backStack.add(TasksDestination.TaskCreation(task = task))
             },
         )
     }
@@ -22,7 +22,7 @@ internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
     entry<TasksDestination.TaskCreation> {
         TaskCreationRoute(
             task = it.task,
-            goBack = { navigator.pop() },
+            goBack = { backStack.removeLastOrNull() },
         )
     }
 }
