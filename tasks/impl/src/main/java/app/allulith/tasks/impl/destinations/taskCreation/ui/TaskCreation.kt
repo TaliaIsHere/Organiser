@@ -22,8 +22,4 @@ internal object TaskCreation {
         data object OnBackTap : UiEvent()
         data object OnDeleteTap : UiEvent()
     }
-
-    sealed class Event {
-        data object GoBack : Event()
-    }
 }

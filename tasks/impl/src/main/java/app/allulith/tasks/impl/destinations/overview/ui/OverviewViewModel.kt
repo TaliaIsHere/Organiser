@@ -1,26 +1,26 @@
 package app.allulith.tasks.impl.destinations.overview.ui
 
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation3.runtime.NavKey
 import app.allulith.data.impl.OrganiserDatabase
+import app.allulith.tasks.api.destinations.TasksDestination
 import app.allulith.tasks.api.domain.Task
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-internal class OverviewViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = OverviewViewModel.Factory::class)
+internal class OverviewViewModel @AssistedInject constructor(
+    @Assisted private val backStack: SnapshotStateList<NavKey>,
     private val database: OrganiserDatabase,
 ) : ViewModel() {
-
-    private val eventsChannel: Channel<Overview.Event> = Channel(BUFFERED)
-    val eventsFlow = eventsChannel.receiveAsFlow()
 
     private val _uiState: MutableStateFlow<Overview.UiState> = MutableStateFlow(Overview.UiState())
     val uiState = _uiState.asStateFlow()
@@ -64,20 +64,19 @@ internal class OverviewViewModel @Inject constructor(
     }
 
     private fun addTask() {
-        viewModelScope.launch {
-            eventsChannel.send(Overview.Event.NavigateToTaskCreation(task = null))
-        }
+        backStack.add(TasksDestination.TaskCreation(task = null))
     }
 
     private fun onBack() {
-        viewModelScope.launch {
-            eventsChannel.send(Overview.Event.GoBack)
-        }
+        backStack.removeLastOrNull()
     }
 
     private fun viewTask(task: Task) {
-        viewModelScope.launch {
-            eventsChannel.send(Overview.Event.NavigateToTaskCreation(task = task))
-        }
+        backStack.add(TasksDestination.TaskCreation(task = task))
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(backStack: SnapshotStateList<NavKey>): OverviewViewModel
     }
 }

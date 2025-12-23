@@ -11,18 +11,13 @@ internal fun EntryProviderScope<NavKey>.tasksNavigationBuilder(
     backStack: SnapshotStateList<NavKey>,
 ) {
     entry<TasksDestination.Overview> {
-        OverviewRoute(
-            goBack = { backStack.removeLastOrNull() },
-            navigateToTaskCreation = { task ->
-                backStack.add(TasksDestination.TaskCreation(task = task))
-            },
-        )
+        OverviewRoute(backStack = backStack)
     }
 
     entry<TasksDestination.TaskCreation> {
         TaskCreationRoute(
+            backStack = backStack,
             task = it.task,
-            goBack = { backStack.removeLastOrNull() },
         )
     }
 }

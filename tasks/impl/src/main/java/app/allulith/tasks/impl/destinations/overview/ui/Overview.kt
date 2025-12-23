@@ -12,11 +12,6 @@ internal object Overview {
         data class Tasks(val tasks: List<Task>) : TasksStructure()
     }
 
-    sealed class Event {
-        data class NavigateToTaskCreation(val task: Task?) : Event()
-        data object GoBack : Event()
-    }
-
     sealed class UiEvent {
         data object OnBack : UiEvent()
         data object OnAddTask : UiEvent()

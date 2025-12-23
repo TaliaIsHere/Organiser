@@ -1,18 +1,17 @@
 package app.allulith.tasks.impl.destinations.taskCreation.ui
 
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation3.runtime.NavKey
 import app.allulith.data.impl.OrganiserDatabase
 import app.allulith.data.impl.entity.Task
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.uuid.ExperimentalUuidApi
@@ -21,12 +20,10 @@ import app.allulith.tasks.api.domain.Task as DomainTask
 
 @HiltViewModel(assistedFactory = TaskCreationViewModel.Factory::class)
 internal class TaskCreationViewModel @AssistedInject constructor(
-    @Assisted val task: DomainTask?,
+    @Assisted private val backStack: SnapshotStateList<NavKey>,
+    @Assisted private val task: DomainTask?,
     private val database: OrganiserDatabase,
 ) : ViewModel() {
-
-    private val eventsChannel: Channel<TaskCreation.Event> = Channel(BUFFERED)
-    val eventsFlow = eventsChannel.receiveAsFlow()
 
     private val _uiState: MutableStateFlow<TaskCreation.UiState> = MutableStateFlow(
         TaskCreation.UiState(
@@ -53,9 +50,7 @@ internal class TaskCreationViewModel @AssistedInject constructor(
     }
 
     private fun goBack() {
-        viewModelScope.launch {
-            eventsChannel.send(TaskCreation.Event.GoBack)
-        }
+        backStack.removeLastOrNull()
     }
 
     @OptIn(ExperimentalUuidApi::class)
@@ -75,7 +70,7 @@ internal class TaskCreationViewModel @AssistedInject constructor(
                     )
                 )
 
-                eventsChannel.send(TaskCreation.Event.GoBack)
+                goBack()
             }
         }
     }
@@ -99,7 +94,7 @@ internal class TaskCreationViewModel @AssistedInject constructor(
         viewModelScope.launch {
             if (task != null) {
                 database.taskDao().delete(uid = task.id)
-                eventsChannel.send(TaskCreation.Event.GoBack)
+                goBack()
             }
         }
     }
@@ -120,7 +115,7 @@ internal class TaskCreationViewModel @AssistedInject constructor(
                             description = uiState.taskDescription.ifEmpty { null },
                         )
                     )
-                    eventsChannel.send(TaskCreation.Event.GoBack)
+                    goBack()
                 }
             }
         }
@@ -128,6 +123,9 @@ internal class TaskCreationViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(task: DomainTask?): TaskCreationViewModel
+        fun create(
+            backStack: SnapshotStateList<NavKey>,
+            task: DomainTask?,
+        ): TaskCreationViewModel
     }
 }
