@@ -42,8 +42,8 @@ fun OrganiserRowCard(
         onClick = onClick,
         content = {
             Row(
-                modifier = Modifier.padding(OrganiserTheme.dimensions.padding.pad200),
-                horizontalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad150),
+                modifier = Modifier.padding(OrganiserTheme.dimensions.dim200),
+                horizontalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim150),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 leadingIcon?.let {
@@ -74,14 +74,14 @@ private fun OrganiserCardPreview() {
     OrganiserTheme {
         Column(
             modifier = Modifier.background(OrganiserTheme.colors.background),
-            verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad050),
+            verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim050),
         ) {
             OrganiserCustomCard(
                 onClick = {},
                 content = {
                     Column(
                         modifier = Modifier.padding(
-                            OrganiserTheme.dimensions.padding.pad100,
+                            OrganiserTheme.dimensions.dim100,
                         )
                     ) {
                         OrganiserBodyText(text = "CUSTOM!")

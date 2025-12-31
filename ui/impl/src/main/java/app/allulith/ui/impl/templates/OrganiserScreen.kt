@@ -46,10 +46,10 @@ fun OrganiserScreen(
             if (primaryAction != null) {
                 Column(
                     modifier = Modifier.padding(
-                        start = OrganiserTheme.dimensions.padding.pad300,
-                        end = OrganiserTheme.dimensions.padding.pad300,
+                        start = OrganiserTheme.dimensions.dim300,
+                        end = OrganiserTheme.dimensions.dim300,
                         bottom = WindowInsets.navigationBars.asPaddingValues()
-                            .calculateBottomPadding() + OrganiserTheme.dimensions.padding.pad200,
+                            .calculateBottomPadding() + OrganiserTheme.dimensions.dim200,
                     )
                 ) {
                     OrganiserButton(
@@ -66,11 +66,11 @@ fun OrganiserScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .padding(
-                    horizontal = OrganiserTheme.dimensions.padding.pad300,
-                    vertical = OrganiserTheme.dimensions.padding.pad200,
+                    horizontal = OrganiserTheme.dimensions.dim300,
+                    vertical = OrganiserTheme.dimensions.dim200,
                 )
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad150),
+            verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim150),
         ) {
             OrganiserHeaderText(text = header)
             if (description != null) {

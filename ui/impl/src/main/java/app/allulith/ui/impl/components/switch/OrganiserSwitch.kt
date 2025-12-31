@@ -50,7 +50,7 @@ private fun OrganiserSwitchPreview() {
     OrganiserTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(
-                OrganiserTheme.dimensions.padding.pad050,
+                OrganiserTheme.dimensions.dim050,
             ),
         ) {
             OrganiserSwitch(

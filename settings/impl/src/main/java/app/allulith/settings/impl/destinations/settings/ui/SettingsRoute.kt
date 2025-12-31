@@ -59,7 +59,7 @@ private fun SettingScreen(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(
-                OrganiserTheme.dimensions.padding.pad050,
+                OrganiserTheme.dimensions.dim050,
             ),
         ) {
             AccountSection(onUiEvent = onUiEvent)
@@ -76,11 +76,11 @@ private fun AccountSection(
         OrganiserSubHeaderText(
             text = stringResource(R.string.setting_account_header),
         )
-        Spacer(Modifier.height(OrganiserTheme.dimensions.padding.pad100))
+        Spacer(Modifier.height(OrganiserTheme.dimensions.dim100))
         OrganiserBodyText(
             text = stringResource(R.string.setting_account_description),
         )
-        Spacer(Modifier.height(OrganiserTheme.dimensions.padding.pad150))
+        Spacer(Modifier.height(OrganiserTheme.dimensions.dim150))
         DeleteButton(onClick = { onUiEvent(Settings.UiEvent.OnDeleteAccount) })
     }
 }
