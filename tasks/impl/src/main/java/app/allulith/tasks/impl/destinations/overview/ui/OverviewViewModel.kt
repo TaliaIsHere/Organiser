@@ -1,5 +1,6 @@
 package app.allulith.tasks.impl.destinations.overview.ui
 
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@Stable
 @HiltViewModel(assistedFactory = OverviewViewModel.Factory::class)
 internal class OverviewViewModel @AssistedInject constructor(
     @Assisted private val backStack: SnapshotStateList<NavKey>,

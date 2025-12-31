@@ -1,5 +1,6 @@
 package app.allulith.tasks.impl.destinations.taskCreation.ui
 
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 import app.allulith.tasks.api.domain.Task as DomainTask
 
+@Stable
 @HiltViewModel(assistedFactory = TaskCreationViewModel.Factory::class)
 internal class TaskCreationViewModel @AssistedInject constructor(
     @Assisted private val backStack: SnapshotStateList<NavKey>,

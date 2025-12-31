@@ -1,5 +1,6 @@
 package app.allulith.tasks.impl.destinations.overview.ui
 
+import androidx.compose.runtime.Stable
 import app.allulith.tasks.api.domain.Task
 
 internal object Overview {
@@ -9,6 +10,8 @@ internal object Overview {
 
     sealed class TasksStructure {
         data object NoTasks : TasksStructure()
+
+        @Stable
         data class Tasks(val tasks: List<Task>) : TasksStructure()
     }
 
