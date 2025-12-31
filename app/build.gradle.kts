@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":routing:impl"))
     implementation(project(":settings:impl"))
     implementation(project(":tasks:impl"))
+    implementation(project(":goals:impl"))
 
     implementation(libs.bundles.core.ui)
     implementation(libs.bundles.compose)
