@@ -62,6 +62,7 @@ private fun TasksRow(
     onUiEvent: (Home.UiEvent) -> Unit,
 ) {
     OrganiserRowCard(
+        leadingIcon = R.drawable.ic_task,
         onClick = {
             onUiEvent(Home.UiEvent.OnTasksTap)
         },
@@ -74,6 +75,7 @@ private fun GoalsRow(
     onUiEvent: (Home.UiEvent) -> Unit,
 ) {
     OrganiserRowCard(
+        leadingIcon = R.drawable.ic_goal,
         onClick = {
             onUiEvent(Home.UiEvent.OnGoalsTap)
         },
@@ -86,6 +88,7 @@ private fun RemindersRow(
     onUiEvent: (Home.UiEvent) -> Unit,
 ) {
     OrganiserRowCard(
+        leadingIcon = R.drawable.ic_reminder,
         onClick = {
             onUiEvent(Home.UiEvent.OnRemindersTap)
         },

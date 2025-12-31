@@ -1,5 +1,6 @@
 package app.allulith.ui.impl.components.cards
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,14 +36,22 @@ fun OrganiserCustomCard(
 fun OrganiserRowCard(
     onClick: () -> Unit,
     text: String,
+    @DrawableRes leadingIcon: Int? = null,
 ) {
     OrganiserCustomCard (
         onClick = onClick,
         content = {
             Row(
                 modifier = Modifier.padding(OrganiserTheme.dimensions.padding.medium),
+                horizontalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.small),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                leadingIcon?.let {
+                    Icon(
+                        painter = painterResource(it),
+                        contentDescription = null,
+                    )
+                }
                 Text(
                     text = text,
                     modifier = Modifier.weight(1f),
@@ -83,6 +92,12 @@ private fun OrganiserCardPreview() {
             OrganiserRowCard(
                 onClick = {},
                 text = "Row",
+            )
+
+            OrganiserRowCard(
+                leadingIcon = R.drawable.ic_close,
+                onClick = {},
+                text = "Leading Icon",
             )
         }
     }

@@ -32,7 +32,7 @@ internal class OrganiserActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val organiserViewModel = hiltViewModel<OrganiserViewModel>()
+            val organiserViewModel: OrganiserViewModel = hiltViewModel()
             val backStack = organiserViewModel.backStack
 
             OrganiserTheme {
