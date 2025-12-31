@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="goals_overview_header">Goals</string>
+    <string name="goals_overview_description">Set goals, view and edit goals</string>
+    <string name="goals_overview_add_goal_tooltip">Add a goal</string>
+    <string name="goals_overview_add_goal_content_description">Add a goal</string>
 </resources>

@@ -18,13 +18,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @Stable
-@HiltViewModel(assistedFactory = OverviewViewModel.Factory::class)
-internal class OverviewViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = TasksOverviewViewModel.Factory::class)
+internal class TasksOverviewViewModel @AssistedInject constructor(
     @Assisted private val backStack: SnapshotStateList<NavKey>,
     private val database: OrganiserDatabase,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<Overview.UiState> = MutableStateFlow(Overview.UiState())
+    private val _uiState: MutableStateFlow<TasksOverview.UiState> = MutableStateFlow(TasksOverview.UiState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -38,7 +38,7 @@ internal class OverviewViewModel @AssistedInject constructor(
             if (existingTasks.isNotEmpty()) {
                 _uiState.update {
                     it.copy(
-                        tasks = Overview.TasksStructure.Tasks(
+                        tasks = TasksOverview.TasksStructure.Tasks(
                             tasks = existingTasks.map { existingTask ->
                                 Task(
                                     id = existingTask.uid,
@@ -51,17 +51,17 @@ internal class OverviewViewModel @AssistedInject constructor(
                 }
             } else {
                 _uiState.update {
-                    it.copy(tasks = Overview.TasksStructure.NoTasks)
+                    it.copy(tasks = TasksOverview.TasksStructure.NoTasks)
                 }
             }
         }
     }
 
-    fun onUiEvent(uiEvent: Overview.UiEvent) {
+    fun onUiEvent(uiEvent: TasksOverview.UiEvent) {
         when (uiEvent) {
-            Overview.UiEvent.OnAddTask -> addTask()
-            Overview.UiEvent.OnBack -> onBack()
-            is Overview.UiEvent.OnViewTask -> viewTask(task = uiEvent.task)
+            TasksOverview.UiEvent.OnAddTask -> addTask()
+            TasksOverview.UiEvent.OnBack -> onBack()
+            is TasksOverview.UiEvent.OnViewTask -> viewTask(task = uiEvent.task)
         }
     }
 
@@ -79,6 +79,6 @@ internal class OverviewViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(backStack: SnapshotStateList<NavKey>): OverviewViewModel
+        fun create(backStack: SnapshotStateList<NavKey>): TasksOverviewViewModel
     }
 }

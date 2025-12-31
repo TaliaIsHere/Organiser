@@ -3,7 +3,7 @@ package app.allulith.tasks.impl.destinations.overview.ui
 import androidx.compose.runtime.Stable
 import app.allulith.tasks.api.domain.Task
 
-internal object Overview {
+internal object TasksOverview {
     data class UiState(
         val tasks: TasksStructure = TasksStructure.NoTasks,
     )

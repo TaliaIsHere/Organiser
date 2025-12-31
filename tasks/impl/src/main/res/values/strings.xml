@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overview_header">Tasks</string>
-    <string name="overview_description">Set tasks, view and edit tasks</string>
-    <string name="overview_add_task_tooltip">Add a task</string>
-    <string name="overview_add_task_content_description">Add a task</string>
-    <string name="overview_subheader_no_tasks">No tasks</string>
-    <string name="overview_description_no_tasks">Tap the big plus icon to get started and add your first task</string>
-    <string name="overview_subheader_tasks">Your upcoming tasks</string>
+    <string name="tasks_overview_header">Tasks</string>
+    <string name="tasks_overview_description">Set tasks, view and edit tasks</string>
+    <string name="tasks_overview_add_task_tooltip">Add a task</string>
+    <string name="tasks_overview_add_task_content_description">Add a task</string>
+    <string name="tasks_overview_subheader_no_tasks">No tasks</string>
+    <string name="tasks_overview_description_no_tasks">Tap the big plus icon to get started and add your first task</string>
+    <string name="tasks_overview_subheader_tasks">Your upcoming tasks</string>
 
     <string name="task_creation_header">Create a task</string>
     <string name="task_creation_description">Here you can create a task to track anything you need to track</string>

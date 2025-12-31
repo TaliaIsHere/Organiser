@@ -29,10 +29,10 @@ import app.allulith.ui.impl.text.OrganiserSubHeaderText
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @Composable
-internal fun OverviewRoute(
+internal fun TasksOverviewRoute(
     backStack: SnapshotStateList<NavKey>,
-    viewModel: OverviewViewModel = hiltViewModel(
-        creationCallback = { factory: OverviewViewModel.Factory ->
+    viewModel: TasksOverviewViewModel = hiltViewModel(
+        creationCallback = { factory: TasksOverviewViewModel.Factory ->
             factory.create(backStack = backStack)
         }
     ),
@@ -46,33 +46,33 @@ internal fun OverviewRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun OverviewScreen(
-    uiState: Overview.UiState,
-    onUiEvent: (Overview.UiEvent) -> Unit,
+    uiState: TasksOverview.UiState,
+    onUiEvent: (TasksOverview.UiEvent) -> Unit,
 ) {
     OrganiserScreen(
-        header = stringResource(R.string.overview_header),
-        description = stringResource(R.string.overview_description),
+        header = stringResource(R.string.tasks_overview_header),
+        description = stringResource(R.string.tasks_overview_description),
         topBarContent = {
             OrganiserTopBar(
                 onBack = {
-                    onUiEvent(Overview.UiEvent.OnBack)
+                    onUiEvent(TasksOverview.UiEvent.OnBack)
                 },
             )
         },
         floatingActionButtonContent = {
             OrganiserFloatingActionButton(
                 onClick = {
-                    onUiEvent(Overview.UiEvent.OnAddTask)
+                    onUiEvent(TasksOverview.UiEvent.OnAddTask)
                 },
-                toolTip = stringResource(R.string.overview_add_task_tooltip),
+                toolTip = stringResource(R.string.tasks_overview_add_task_tooltip),
                 icon = R.drawable.ic_add,
-                iconDescription = stringResource(R.string.overview_add_task_content_description),
+                iconDescription = stringResource(R.string.tasks_overview_add_task_content_description),
             )
         },
     ) {
         when (uiState.tasks) {
-            Overview.TasksStructure.NoTasks -> NoTasks()
-            is Overview.TasksStructure.Tasks -> {
+            TasksOverview.TasksStructure.NoTasks -> NoTasks()
+            is TasksOverview.TasksStructure.Tasks -> {
                 Tasks(
                     tasks = uiState.tasks,
                     onUiEvent = onUiEvent,
@@ -88,30 +88,30 @@ private fun NoTasks() {
         verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.small),
     ) {
         OrganiserSubHeaderText(
-            text = stringResource(R.string.overview_subheader_no_tasks),
+            text = stringResource(R.string.tasks_overview_subheader_no_tasks),
         )
         OrganiserBodyText(
-            text = stringResource(R.string.overview_description_no_tasks),
+            text = stringResource(R.string.tasks_overview_description_no_tasks),
         )
     }
 }
 
 @Composable
 private fun Tasks(
-    tasks: Overview.TasksStructure.Tasks,
-    onUiEvent: (Overview.UiEvent) -> Unit,
+    tasks: TasksOverview.TasksStructure.Tasks,
+    onUiEvent: (TasksOverview.UiEvent) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.small),
     ) {
         OrganiserSubHeaderText(
-            text = stringResource(R.string.overview_subheader_tasks),
+            text = stringResource(R.string.tasks_overview_subheader_tasks),
         )
         tasks.tasks.forEach { task ->
             TaskCard(
                 task = task,
                 onTaskClick = {
-                    onUiEvent(Overview.UiEvent.OnViewTask(task = task))
+                    onUiEvent(TasksOverview.UiEvent.OnViewTask(task = task))
                 },
             )
         }
@@ -161,7 +161,7 @@ private fun TaskCard(
 private fun OverviewScreenNoTasksPreview() {
     OrganiserTheme {
         OverviewScreen(
-            uiState = Overview.UiState(),
+            uiState = TasksOverview.UiState(),
             onUiEvent = {},
         )
     }
@@ -172,8 +172,8 @@ private fun OverviewScreenNoTasksPreview() {
 private fun OverviewScreenTasksPreview() {
     OrganiserTheme {
         OverviewScreen(
-            uiState = Overview.UiState(
-                tasks = Overview.TasksStructure.Tasks(
+            uiState = TasksOverview.UiState(
+                tasks = TasksOverview.TasksStructure.Tasks(
                     listOf(
                         Task(
                             id = "1",

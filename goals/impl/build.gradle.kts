@@ -42,6 +42,8 @@ android {
 dependencies {
     api(project(":goals:api"))
 
+    implementation(project(":ui:impl"))
+
     implementation(libs.bundles.core.ui)
     implementation(libs.bundles.compose)
     implementation(platform(libs.androidx.compose.bom))

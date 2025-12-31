@@ -13,14 +13,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @Stable
 @HiltViewModel(assistedFactory = HomeViewModel.Factory::class)
@@ -58,11 +54,11 @@ internal class HomeViewModel @AssistedInject constructor(
     }
 
     private fun navigateToTasks() {
-        backStack.add(TasksDestination.Overview)
+        backStack.add(TasksDestination.TasksOverview)
     }
 
     private fun navigateToGoals() {
-        backStack.add(GoalsDestination.Overview)
+        backStack.add(GoalsDestination.GoalsOverview)
     }
 
     @AssistedFactory
