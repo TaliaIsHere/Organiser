@@ -85,7 +85,7 @@ private fun OverviewScreen(
 @Composable
 private fun NoTasks() {
     Column(
-        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.small),
+        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad050),
     ) {
         OrganiserSubHeaderText(
             text = stringResource(R.string.tasks_overview_subheader_no_tasks),
@@ -102,7 +102,7 @@ private fun Tasks(
     onUiEvent: (TasksOverview.UiEvent) -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.small),
+        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad050),
     ) {
         OrganiserSubHeaderText(
             text = stringResource(R.string.tasks_overview_subheader_tasks),
@@ -131,13 +131,13 @@ private fun TaskCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(OrganiserTheme.dimensions.padding.medium),
+                .padding(OrganiserTheme.dimensions.padding.pad100),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.small),
+            horizontalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad050),
         ) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.small),
+                verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad050),
             ) {
                 OrganiserSmallHeaderText(
                     text = task.title,

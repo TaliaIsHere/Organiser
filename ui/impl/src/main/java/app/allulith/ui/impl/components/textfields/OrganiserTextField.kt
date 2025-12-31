@@ -28,7 +28,7 @@ fun OrganiserTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.small)
+        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad050)
     ) {
         OrganiserBodyText(
             text = label,
@@ -65,7 +65,7 @@ private fun OrganiserTextFieldPreview() {
     OrganiserTheme {
         Column(
             modifier = Modifier.background(OrganiserTheme.colors.background),
-            verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.large),
+            verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad200),
         ) {
             OrganiserTextField(
                 text = "Hi!",

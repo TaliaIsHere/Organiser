@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TooltipAnchorPosition
@@ -21,11 +19,11 @@ import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.allulith.ui.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.buttons.OrganiserButton
+import app.allulith.ui.impl.components.fab.OrganiserFloatingActionButton
 import app.allulith.ui.impl.text.OrganiserBodyText
 import app.allulith.ui.impl.text.OrganiserHeaderText
 import app.allulith.ui.impl.theme.OrganiserTheme
@@ -48,10 +46,10 @@ fun OrganiserScreen(
             if (primaryAction != null) {
                 Column(
                     modifier = Modifier.padding(
-                        start = OrganiserTheme.dimensions.padding.medium,
-                        end = OrganiserTheme.dimensions.padding.medium,
+                        start = OrganiserTheme.dimensions.padding.pad300,
+                        end = OrganiserTheme.dimensions.padding.pad300,
                         bottom = WindowInsets.navigationBars.asPaddingValues()
-                            .calculateBottomPadding() + OrganiserTheme.dimensions.padding.small,
+                            .calculateBottomPadding() + OrganiserTheme.dimensions.padding.pad200,
                     )
                 ) {
                     OrganiserButton(
@@ -67,10 +65,12 @@ fun OrganiserScreen(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(OrganiserTheme.dimensions.padding.large)
+                .padding(
+                    horizontal = OrganiserTheme.dimensions.padding.pad300,
+                    vertical = OrganiserTheme.dimensions.padding.pad200,
+                )
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement
-                .spacedBy(OrganiserTheme.dimensions.padding.medium),
+            verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.padding.pad150),
         ) {
             OrganiserHeaderText(text = header)
             if (description != null) {
@@ -105,14 +105,12 @@ private fun OrganiserScreenPreview() {
                     tooltip = { PlainTooltip { OrganiserBodyText(text = "Add a task") } },
                     state = rememberTooltipState(),
                 ) {
-                    FloatingActionButton(
+                    OrganiserFloatingActionButton(
                         onClick = {},
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_close),
-                            contentDescription = null,
-                        )
-                    }
+                        toolTip = "",
+                        icon = R.drawable.ic_close,
+                        iconDescription = "",
+                    )
                 }
             },
             content = {},

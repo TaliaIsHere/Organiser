@@ -12,9 +12,14 @@ data class OrganiserDimensions(
 internal val LocalOrganiserDimensions = staticCompositionLocalOf {
     OrganiserDimensions(
         padding = OrganiserPadding(
-            small = 0.dp,
-            medium = 0.dp,
-            large = 0.dp,
+            pad050 = 0.dp,
+            pad100 = 0.dp,
+            pad150 = 0.dp,
+            pad200 = 0.dp,
+            pad250 = 0.dp,
+            pad300 = 0.dp,
+            pad350 = 0.dp,
+            pad400 = 0.dp,
         ),
     )
 }
