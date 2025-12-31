@@ -5,6 +5,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation3.runtime.NavKey
+import app.allulith.goals.api.destinations.GoalsDestination
 import app.allulith.home.impl.destinations.home.domain.HomeRepository
 import app.allulith.settings.api.destinations.SettingsDestination
 import app.allulith.tasks.api.destinations.TasksDestination
@@ -47,7 +48,7 @@ internal class HomeViewModel @AssistedInject constructor(
         when (uiEvent) {
             Home.UiEvent.OnSettingsTap -> navigateToSettings()
             Home.UiEvent.OnTasksTap -> navigateToTasks()
-            Home.UiEvent.OnGoalsTap -> TODO()
+            Home.UiEvent.OnGoalsTap -> navigateToGoals()
             Home.UiEvent.OnRemindersTap -> TODO()
         }
     }
@@ -58,6 +59,10 @@ internal class HomeViewModel @AssistedInject constructor(
 
     private fun navigateToTasks() {
         backStack.add(TasksDestination.Overview)
+    }
+
+    private fun navigateToGoals() {
+        backStack.add(GoalsDestination.Overview)
     }
 
     @AssistedFactory
