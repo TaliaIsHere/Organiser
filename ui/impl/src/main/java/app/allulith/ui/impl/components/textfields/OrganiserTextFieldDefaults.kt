@@ -7,7 +7,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 internal object OrganiserTextFieldDefaults {
@@ -66,6 +65,11 @@ internal object OrganiserTextFieldDefaults {
         @Composable
         get() = OrganiserTheme.typography.body
 
-    val height: Dp = 56.dp
-    val shape: RoundedCornerShape = RoundedCornerShape(8.dp)
+    val height: Dp
+        @Composable
+        get() = OrganiserTheme.dimensions.dim700
+
+    val shape: RoundedCornerShape
+        @Composable
+        get() = RoundedCornerShape(OrganiserTheme.dimensions.dim100)
 }

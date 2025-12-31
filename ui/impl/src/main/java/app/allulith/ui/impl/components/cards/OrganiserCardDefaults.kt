@@ -5,7 +5,6 @@ import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 internal object OrganiserCardDefaults {
@@ -22,5 +21,7 @@ internal object OrganiserCardDefaults {
         @Composable
         get() = OrganiserTheme.typography.subHeader
 
-    val shape = RoundedCornerShape(12.dp)
+    val shape: RoundedCornerShape
+        @Composable
+        get() = RoundedCornerShape(OrganiserTheme.dimensions.dim150)
 }

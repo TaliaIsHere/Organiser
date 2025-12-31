@@ -11,4 +11,5 @@ internal val dimensions = OrganiserDimensions(
     dim300 = 24.dp,
     dim350 = 28.dp,
     dim400 = 32.dp,
+    dim700 = 56.dp,
 )

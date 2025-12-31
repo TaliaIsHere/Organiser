@@ -19,7 +19,9 @@ data class OrganiserDimensions(
     val dim300: Dp,
     val dim350: Dp,
     val dim400: Dp,
+    val dim700: Dp,
 )
+
 internal val LocalOrganiserDimensions = staticCompositionLocalOf {
     OrganiserDimensions(
         dim050 = 0.dp,
@@ -30,5 +32,6 @@ internal val LocalOrganiserDimensions = staticCompositionLocalOf {
         dim300 = 0.dp,
         dim350 = 0.dp,
         dim400 = 0.dp,
+        dim700 = 0.dp,
     )
 }
