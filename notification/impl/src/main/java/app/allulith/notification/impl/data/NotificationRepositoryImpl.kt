@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.RequiresPermission
+import app.allulith.notification.api.domain.NotificationConstants
 import app.allulith.notification.api.domain.NotificationRepository
 import app.allulith.notification.api.domain.Reminder
 import java.util.Calendar
@@ -31,11 +32,11 @@ internal class NotificationRepositoryImpl @Inject constructor() : NotificationRe
         }
 
         val intent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra("id", reminder.id)
-            putExtra("title", reminder.title)
-            putExtra("message", reminder.message)
-            putExtra("hour", reminder.hour)
-            putExtra("minute", reminder.minute)
+            putExtra(NotificationConstants.Intent.ID, reminder.id)
+            putExtra(NotificationConstants.Intent.TITLE, reminder.title)
+            putExtra(NotificationConstants.Intent.MESSAGE, reminder.message)
+            putExtra(NotificationConstants.Intent.HOUR, reminder.hour)
+            putExtra(NotificationConstants.Intent.MINUTE, reminder.minute)
         }
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -52,5 +53,4 @@ internal class NotificationRepositoryImpl @Inject constructor() : NotificationRe
             pendingIntent,
         )
     }
-
 }
