@@ -1,3 +1,8 @@
 package app.allulith.notification.api.domain
 
-interface NotificationRepository {}
+import android.content.Context
+
+interface NotificationRepository {
+
+    fun scheduleExactReminder(context: Context, reminder: Reminder)
+}

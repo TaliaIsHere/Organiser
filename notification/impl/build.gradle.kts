@@ -12,6 +12,10 @@ android {
         version = release(36)
     }
 
+    defaultConfig {
+        minSdk = 34
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
