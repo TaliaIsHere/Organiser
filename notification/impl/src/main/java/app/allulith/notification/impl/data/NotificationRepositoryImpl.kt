@@ -40,7 +40,7 @@ internal class NotificationRepositoryImpl @Inject constructor() : NotificationRe
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            reminder.id, // unique per reminder
+            reminder.id,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -49,7 +49,7 @@ internal class NotificationRepositoryImpl @Inject constructor() : NotificationRe
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
-            pendingIntent
+            pendingIntent,
         )
     }
 

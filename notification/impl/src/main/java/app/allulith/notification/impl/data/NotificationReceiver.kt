@@ -22,8 +22,8 @@ internal class NotificationReceiver : BroadcastReceiver() {
     @RequiresPermission(allOf = [Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SCHEDULE_EXACT_ALARM])
     override fun onReceive(context: Context, intent: Intent) {
         val id = intent.getIntExtra("id", 0)
-        val title = intent.getStringExtra("title") ?: "Reminder"
-        val message = intent.getStringExtra("message") ?: "It's time!"
+        val title = intent.getStringExtra("title")
+        val message = intent.getStringExtra("message")
         val hour = intent.getIntExtra("hour", 0)
         val minute = intent.getIntExtra("minute", 0)
 
