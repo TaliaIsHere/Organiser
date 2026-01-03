@@ -10,11 +10,14 @@ import androidx.core.app.NotificationManagerCompat
 import app.allulith.notification.api.domain.NotificationRepository
 import app.allulith.notification.api.domain.Reminder
 import app.allulith.notification.impl.R
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-internal class NotificationReceiver @Inject constructor(
-    private val repository: NotificationRepository,
-) : BroadcastReceiver() {
+@AndroidEntryPoint
+internal class NotificationReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var repository: NotificationRepository
 
     @RequiresPermission(allOf = [Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SCHEDULE_EXACT_ALARM])
     override fun onReceive(context: Context, intent: Intent) {
