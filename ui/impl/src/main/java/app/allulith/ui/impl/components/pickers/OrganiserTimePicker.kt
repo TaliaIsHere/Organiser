@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerDefaults
@@ -16,7 +18,9 @@ import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.window.Dialog
 import app.allulith.ui.impl.components.buttons.OrganiserButton
+import app.allulith.ui.impl.components.cards.OrganiserCardDefaults
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,31 +38,42 @@ fun OrganiserTimePicker(
         is24Hour = is24Hour,
     )
 
-    Column(
-        modifier = Modifier.width(IntrinsicSize.Min),
-        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim100),
+    Dialog(
+        onDismissRequest = onDismiss,
     ) {
-        TimePicker(
-            state = state,
-            // TODO my colors
-            colors = TimePickerDefaults.colors(),
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+        Card(
+            shape = OrganiserCardDefaults.shape,
+            colors = OrganiserCardDefaults.colors,
         ) {
-            Spacer(Modifier.weight(1f))
-            OrganiserButton(
-                text = "Dismiss",
-                onClick = onDismiss,
-            )
-            Spacer(Modifier.width(OrganiserTheme.dimensions.dim150))
-            OrganiserButton(
-                text = "Confirm",
-                onClick = {
-                    onConfirm(state)
-                },
-            )
+            Column(
+                modifier = Modifier
+                    .width(IntrinsicSize.Min)
+                    .padding(OrganiserTheme.dimensions.dim200),
+                verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim100),
+            ) {
+                TimePicker(
+                    state = state,
+                    // TODO my colors
+                    colors = TimePickerDefaults.colors(),
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Spacer(Modifier.weight(1f))
+                    OrganiserButton(
+                        text = "Dismiss",
+                        onClick = onDismiss,
+                    )
+                    Spacer(Modifier.width(OrganiserTheme.dimensions.dim150))
+                    OrganiserButton(
+                        text = "Confirm",
+                        onClick = {
+                            onConfirm(state)
+                        },
+                    )
+                }
+            }
         }
     }
 }

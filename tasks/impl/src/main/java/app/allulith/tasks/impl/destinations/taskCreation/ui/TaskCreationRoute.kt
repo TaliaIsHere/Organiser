@@ -41,11 +41,28 @@ internal fun TaskCreationRoute(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TaskCreationScreen(
     uiState: TaskCreation.UiState,
     onUiEvent: (TaskCreation.UiEvent) -> Unit,
 ) {
+    AnimatedVisibility(visible = uiState.isTimePickerVisible) {
+        OrganiserTimePicker(
+            hour = uiState.hour,
+            minute = uiState.minute,
+            onConfirm = {
+                onUiEvent(
+                    TaskCreation.UiEvent.OnTimeChange(
+                        hour = it.hour,
+                        minute = it.minute,
+                    )
+                )
+            },
+            onDismiss = { onUiEvent(TaskCreation.UiEvent.OnDismissTimePickerDialog) },
+        )
+    }
+
     when (uiState.taskState) {
         TaskCreation.TaskState.Edit -> {
             EditSection(
@@ -127,29 +144,11 @@ private fun NewSection(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Content(
     uiState: TaskCreation.UiState,
     onUiEvent: (TaskCreation.UiEvent) -> Unit,
 ) {
-    // TODO put in a dialog
-    AnimatedVisibility(visible = uiState.isTimePickerVisible) {
-        OrganiserTimePicker(
-            hour = uiState.hour,
-            minute = uiState.minute,
-            onConfirm = {
-                onUiEvent(
-                    TaskCreation.UiEvent.OnTimeChange(
-                        hour = it.hour,
-                        minute = it.minute,
-                    )
-                )
-            },
-            onDismiss = { onUiEvent(TaskCreation.UiEvent.OnDismissTimePickerDialog) },
-        )
-    }
-
     OrganiserTextField(
         text = uiState.taskTitle,
         onValueChange = { text ->
