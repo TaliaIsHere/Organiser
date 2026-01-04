@@ -1,5 +1,7 @@
 package app.allulith.tasks.impl.destinations.taskCreation.ui
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
@@ -20,6 +22,7 @@ import kotlin.uuid.Uuid
 import app.allulith.tasks.api.domain.Task as DomainTask
 
 @Stable
+@OptIn(ExperimentalMaterial3Api::class)
 @HiltViewModel(assistedFactory = TaskCreationViewModel.Factory::class)
 internal class TaskCreationViewModel @AssistedInject constructor(
     @Assisted private val backStack: SnapshotStateList<NavKey>,
@@ -40,12 +43,16 @@ internal class TaskCreationViewModel @AssistedInject constructor(
     )
     val uiState = _uiState.asStateFlow()
 
+    @OptIn(ExperimentalMaterial3Api::class)
     fun onUiEvent(uiEvent: TaskCreation.UiEvent) {
         when (uiEvent) {
             TaskCreation.UiEvent.OnBackTap -> goBack()
             TaskCreation.UiEvent.OnCreateTaskTap -> createTask()
             is TaskCreation.UiEvent.OnDescriptionChange -> onDescriptionChange(text = uiEvent.text)
             is TaskCreation.UiEvent.OnTitleChange -> onTitleChange(text = uiEvent.text)
+            TaskCreation.UiEvent.OnShowTimerPicker -> showTimePicker()
+            TaskCreation.UiEvent.OnDismissTimePickerDialog -> hideTimePicker()
+            is TaskCreation.UiEvent.OnTimeChange -> onTimeChange(state = uiEvent.timePickerState)
             TaskCreation.UiEvent.OnDeleteTap -> deleteTask()
             TaskCreation.UiEvent.OnUpdateTaskTap -> updateTask()
         }
@@ -58,9 +65,14 @@ internal class TaskCreationViewModel @AssistedInject constructor(
     @OptIn(ExperimentalUuidApi::class)
     private fun createTask() {
         val uiState = _uiState.value
-        if (uiState.taskTitle.isBlank()) {
+        val timeState = uiState.timePickerState
+
+        if (uiState.taskTitle.isBlank() || timeState == null) {
             _uiState.update {
-                it.copy(taskTitleError = true)
+                it.copy(
+                    taskTitleError = uiState.taskTitle.isBlank(),
+                    timeError = timeState == null,
+                )
             }
         } else {
             viewModelScope.launch {
@@ -69,7 +81,10 @@ internal class TaskCreationViewModel @AssistedInject constructor(
                         uid = Uuid.random().toString(),
                         title = uiState.taskTitle,
                         description = uiState.taskDescription.ifEmpty { null },
+                        hour = timeState.hour,
+                        minute = timeState.minute,
                     )
+                    // TODO set notification
                 )
 
                 goBack()
@@ -92,6 +107,32 @@ internal class TaskCreationViewModel @AssistedInject constructor(
         }
     }
 
+    private fun showTimePicker() {
+        _uiState.update {
+            it.copy(
+                isTimePickerVisible = true,
+            )
+        }
+    }
+
+    private fun hideTimePicker() {
+        _uiState.update {
+            it.copy(
+                isTimePickerVisible = false,
+            )
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    private fun onTimeChange(state: TimePickerState) {
+        _uiState.update {
+            it.copy(
+                timePickerState = state,
+                isTimePickerVisible = false,
+            )
+        }
+    }
+
     private fun deleteTask() {
         viewModelScope.launch {
             if (task != null) {
@@ -103,10 +144,15 @@ internal class TaskCreationViewModel @AssistedInject constructor(
 
     private fun updateTask() {
         val uiState = _uiState.value
+        val timeState = uiState.timePickerState
+
         if (task != null) {
-            if (uiState.taskTitle.isBlank()) {
+            if (uiState.taskTitle.isBlank() || timeState == null) {
                 _uiState.update {
-                    it.copy(taskTitleError = true)
+                    it.copy(
+                        taskTitleError = uiState.taskTitle.isBlank(),
+                        timeError = timeState == null,
+                    )
                 }
             } else {
                 viewModelScope.launch {
@@ -115,7 +161,10 @@ internal class TaskCreationViewModel @AssistedInject constructor(
                             uid = task.id,
                             title = uiState.taskTitle,
                             description = uiState.taskDescription.ifEmpty { null },
+                            hour = timeState.hour,
+                            minute = timeState.minute,
                         )
+                        // TODO set notification
                     )
                     goBack()
                 }

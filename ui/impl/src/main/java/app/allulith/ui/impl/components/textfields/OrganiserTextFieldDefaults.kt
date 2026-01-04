@@ -10,16 +10,20 @@ import androidx.compose.ui.unit.Dp
 import app.allulith.ui.impl.theme.OrganiserTheme
 
 internal object OrganiserTextFieldDefaults {
-    val colors: TextFieldColors
-        @Composable
-        get() = TextFieldDefaults.colors(
+
+    // TODO handle dropDown error state
+    @Composable
+    fun getColors(
+        dropDown: Boolean,
+    ): TextFieldColors {
+        return TextFieldDefaults.colors(
             focusedTextColor = OrganiserTheme.colors.onSurface,
             unfocusedTextColor = OrganiserTheme.colors.onSurface,
-            disabledTextColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.5f),
+            disabledTextColor = OrganiserTheme.colors.onSurface.copy(alpha = if (dropDown) 1f else 0.5f),
             errorTextColor = OrganiserTheme.colors.error,
             focusedContainerColor = OrganiserTheme.colors.surface,
             unfocusedContainerColor = OrganiserTheme.colors.surface,
-            disabledContainerColor = OrganiserTheme.colors.surface.copy(alpha = 0.5f),
+            disabledContainerColor = OrganiserTheme.colors.surface.copy(alpha = if (dropDown) 1f else 0.5f),
             errorContainerColor = OrganiserTheme.colors.surface,
             cursorColor = OrganiserTheme.colors.primary,
             errorCursorColor = OrganiserTheme.colors.error,
@@ -29,37 +33,38 @@ internal object OrganiserTextFieldDefaults {
             ),
             focusedIndicatorColor = OrganiserTheme.colors.primary,
             unfocusedIndicatorColor = OrganiserTheme.colors.onSurface,
-            disabledIndicatorColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.5f),
+            disabledIndicatorColor = OrganiserTheme.colors.onSurface.copy(alpha = if (dropDown) 1f else 0.5f),
             errorIndicatorColor = OrganiserTheme.colors.error,
             focusedLeadingIconColor = OrganiserTheme.colors.primary,
             unfocusedLeadingIconColor = OrganiserTheme.colors.primary,
-            disabledLeadingIconColor = OrganiserTheme.colors.primary.copy(alpha = 0.5f),
+            disabledLeadingIconColor = OrganiserTheme.colors.primary.copy(alpha = if (dropDown) 1f else 0.5f),
             errorLeadingIconColor = OrganiserTheme.colors.error,
             focusedTrailingIconColor = OrganiserTheme.colors.primary,
             unfocusedTrailingIconColor = OrganiserTheme.colors.primary,
-            disabledTrailingIconColor = OrganiserTheme.colors.primary.copy(alpha = 0.5f),
+            disabledTrailingIconColor = OrganiserTheme.colors.primary.copy(alpha = if (dropDown) 1f else 0.5f),
             errorTrailingIconColor = OrganiserTheme.colors.error,
             focusedLabelColor = OrganiserTheme.colors.onBackground,
             unfocusedLabelColor = OrganiserTheme.colors.onBackground,
-            disabledLabelColor = OrganiserTheme.colors.onBackground.copy(alpha = 0.5f),
+            disabledLabelColor = OrganiserTheme.colors.onBackground.copy(alpha = if (dropDown) 1f else 0.5f),
             errorLabelColor = OrganiserTheme.colors.error,
-            focusedPlaceholderColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.8f),
-            unfocusedPlaceholderColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.8f),
-            disabledPlaceholderColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.8f),
-            errorPlaceholderColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.8f),
+            focusedPlaceholderColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.5f),
+            unfocusedPlaceholderColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.5f),
+            disabledPlaceholderColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.5f),
+            errorPlaceholderColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.5f),
             focusedSupportingTextColor = OrganiserTheme.colors.onBackground,
             unfocusedSupportingTextColor = OrganiserTheme.colors.onBackground,
-            disabledSupportingTextColor = OrganiserTheme.colors.onBackground.copy(alpha = 0.5f),
+            disabledSupportingTextColor = OrganiserTheme.colors.onBackground.copy(alpha = if (dropDown) 1f else 0.5f),
             errorSupportingTextColor = OrganiserTheme.colors.error,
             focusedPrefixColor = OrganiserTheme.colors.onSurface,
             unfocusedPrefixColor = OrganiserTheme.colors.onSurface,
-            disabledPrefixColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.5f),
+            disabledPrefixColor = OrganiserTheme.colors.onSurface.copy(alpha = if (dropDown) 1f else 0.5f),
             errorPrefixColor = OrganiserTheme.colors.error,
             focusedSuffixColor = OrganiserTheme.colors.onSurface,
             unfocusedSuffixColor = OrganiserTheme.colors.onSurface,
-            disabledSuffixColor = OrganiserTheme.colors.onSurface.copy(alpha = 0.5f),
+            disabledSuffixColor = OrganiserTheme.colors.onSurface.copy(alpha = if (dropDown) 1f else 0.5f),
             errorSuffixColor = OrganiserTheme.colors.error,
         )
+    }
 
     val textStyle: TextStyle
         @Composable

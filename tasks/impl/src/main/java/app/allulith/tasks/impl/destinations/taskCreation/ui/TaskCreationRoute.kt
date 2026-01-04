@@ -1,6 +1,9 @@
 package app.allulith.tasks.impl.destinations.taskCreation.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
@@ -13,6 +16,8 @@ import app.allulith.tasks.api.domain.Task
 import app.allulith.tasks.impl.R
 import app.allulith.ui.impl.components.appbars.OrganiserTopBar
 import app.allulith.ui.impl.components.appbars.OrganiserTopBarAction
+import app.allulith.ui.impl.components.pickers.OrganiserTimePicker
+import app.allulith.ui.impl.components.pickers.OrganiserTimerPickerTextField
 import app.allulith.ui.impl.components.textfields.OrganiserTextField
 import app.allulith.ui.impl.templates.OrganiserScreen
 import app.allulith.ui.impl.templates.OrganiserScreenAction
@@ -123,11 +128,22 @@ private fun NewSection(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Content(
     uiState: TaskCreation.UiState,
     onUiEvent: (TaskCreation.UiEvent) -> Unit,
 ) {
+    // TODO put in a dialog
+    AnimatedVisibility(visible = uiState.isTimePickerVisible) {
+        OrganiserTimePicker(
+            hour = uiState.timePickerState?.hour,
+            minute = uiState.timePickerState?.minute,
+            onConfirm = { onUiEvent(TaskCreation.UiEvent.OnTimeChange(timePickerState = it)) },
+            onDismiss = { onUiEvent(TaskCreation.UiEvent.OnDismissTimePickerDialog) },
+        )
+    }
+
     OrganiserTextField(
         text = uiState.taskTitle,
         onValueChange = { text ->
@@ -135,7 +151,7 @@ private fun Content(
         },
         modifier = Modifier.fillMaxWidth(),
         label = stringResource(R.string.task_creation_title_text_field_label),
-        placeholder = "",
+        placeholder = stringResource(R.string.task_creation_title_text_field_placeholder),
         isError = uiState.taskTitleError,
         errorText = stringResource(R.string.task_creation_title_error_text),
     )
@@ -146,10 +162,23 @@ private fun Content(
         },
         modifier = Modifier.fillMaxWidth(),
         label = stringResource(R.string.task_creation_description_text_field_label),
-        placeholder = "",
+        placeholder = stringResource(R.string.task_creation_description_text_field_placeholder),
+    )
+    OrganiserTimerPickerTextField(
+        timePickerState = uiState.timePickerState,
+        modifier = Modifier.fillMaxWidth(),
+        label = stringResource(R.string.task_creation_time_text_field_label),
+        placeholder = stringResource(R.string.task_creation_time_text_field_placeholder),
+        onClick = {
+            onUiEvent(TaskCreation.UiEvent.OnShowTimerPicker)
+        },
+        onClickLabel = stringResource(R.string.task_creation_time_text_field_click_label),
+        isError = uiState.timeError,
+        errorText = stringResource(R.string.task_creation_time_error_text),
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
 private fun TaskCreationScreenPreview() {
@@ -158,6 +187,11 @@ private fun TaskCreationScreenPreview() {
             uiState = TaskCreation.UiState(
                 taskTitle = "",
                 taskDescription = "",
+                timePickerState = TimePickerState(
+                    initialHour = 0,
+                    initialMinute = 0,
+                    is24Hour = false,
+                ),
                 taskState = TaskCreation.TaskState.New,
             ),
             onUiEvent = {},
