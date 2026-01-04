@@ -3,7 +3,6 @@ package app.allulith.tasks.impl.destinations.taskCreation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
@@ -137,9 +136,16 @@ private fun Content(
     // TODO put in a dialog
     AnimatedVisibility(visible = uiState.isTimePickerVisible) {
         OrganiserTimePicker(
-            hour = uiState.timePickerState?.hour,
-            minute = uiState.timePickerState?.minute,
-            onConfirm = { onUiEvent(TaskCreation.UiEvent.OnTimeChange(timePickerState = it)) },
+            hour = uiState.hour,
+            minute = uiState.minute,
+            onConfirm = {
+                onUiEvent(
+                    TaskCreation.UiEvent.OnTimeChange(
+                        hour = it.hour,
+                        minute = it.minute,
+                    )
+                )
+            },
             onDismiss = { onUiEvent(TaskCreation.UiEvent.OnDismissTimePickerDialog) },
         )
     }
@@ -165,7 +171,8 @@ private fun Content(
         placeholder = stringResource(R.string.task_creation_description_text_field_placeholder),
     )
     OrganiserTimerPickerTextField(
-        timePickerState = uiState.timePickerState,
+        hour = uiState.hour,
+        minute = uiState.minute,
         modifier = Modifier.fillMaxWidth(),
         label = stringResource(R.string.task_creation_time_text_field_label),
         placeholder = stringResource(R.string.task_creation_time_text_field_placeholder),
@@ -187,11 +194,8 @@ private fun TaskCreationScreenPreview() {
             uiState = TaskCreation.UiState(
                 taskTitle = "",
                 taskDescription = "",
-                timePickerState = TimePickerState(
-                    initialHour = 0,
-                    initialMinute = 0,
-                    is24Hour = false,
-                ),
+                hour = 0,
+                minute = 0,
                 taskState = TaskCreation.TaskState.New,
             ),
             onUiEvent = {},

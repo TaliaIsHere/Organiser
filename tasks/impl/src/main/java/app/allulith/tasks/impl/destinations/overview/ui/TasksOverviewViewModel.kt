@@ -44,6 +44,8 @@ internal class TasksOverviewViewModel @AssistedInject constructor(
                                     id = existingTask.uid,
                                     title = existingTask.title,
                                     description = existingTask.description,
+                                    hour = existingTask.hour,
+                                    minute = existingTask.minute,
                                 )
                             }
                         )

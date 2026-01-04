@@ -102,7 +102,7 @@ private fun Tasks(
     onUiEvent: (TasksOverview.UiEvent) -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim050),
+        verticalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim100),
     ) {
         OrganiserSubHeaderText(
             text = stringResource(R.string.tasks_overview_subheader_tasks),
@@ -131,9 +131,9 @@ private fun TaskCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(OrganiserTheme.dimensions.dim100),
+                .padding(OrganiserTheme.dimensions.dim200),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim050),
+            horizontalArrangement = Arrangement.spacedBy(OrganiserTheme.dimensions.dim150),
         ) {
             Column(
                 modifier = Modifier.weight(1f),
@@ -179,11 +179,15 @@ private fun OverviewScreenTasksPreview() {
                             id = "1",
                             title = "Take medication",
                             description = "Take 2 pills",
+                            hour = 17,
+                            minute = 30,
                         ),
                         Task(
                             id = "2",
                             title = "Walk doggo",
                             description = null,
+                            hour = 17,
+                            minute = 30,
                         ),
                     )
                 ),

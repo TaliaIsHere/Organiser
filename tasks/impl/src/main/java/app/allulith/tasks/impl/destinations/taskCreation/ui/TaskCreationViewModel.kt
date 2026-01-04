@@ -1,7 +1,7 @@
 package app.allulith.tasks.impl.destinations.taskCreation.ui
 
+import android.content.Context
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
@@ -9,10 +9,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation3.runtime.NavKey
 import app.allulith.data.impl.OrganiserDatabase
 import app.allulith.data.impl.entity.Task
+import app.allulith.notification.api.domain.NotificationRepository
+import app.allulith.notification.api.domain.Reminder
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -25,20 +28,24 @@ import app.allulith.tasks.api.domain.Task as DomainTask
 @OptIn(ExperimentalMaterial3Api::class)
 @HiltViewModel(assistedFactory = TaskCreationViewModel.Factory::class)
 internal class TaskCreationViewModel @AssistedInject constructor(
+    @param:ApplicationContext val context: Context,
     @Assisted private val backStack: SnapshotStateList<NavKey>,
     @Assisted private val task: DomainTask?,
     private val database: OrganiserDatabase,
+    private val notificationRepository: NotificationRepository,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<TaskCreation.UiState> = MutableStateFlow(
         TaskCreation.UiState(
             taskTitle = task?.title ?: "",
             taskDescription = task?.description ?: "",
+            hour = task?.hour,
+            minute = task?.minute,
             taskState = if (task == null) {
                 TaskCreation.TaskState.New
             } else {
                 TaskCreation.TaskState.Edit
-            }
+            },
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -52,7 +59,12 @@ internal class TaskCreationViewModel @AssistedInject constructor(
             is TaskCreation.UiEvent.OnTitleChange -> onTitleChange(text = uiEvent.text)
             TaskCreation.UiEvent.OnShowTimerPicker -> showTimePicker()
             TaskCreation.UiEvent.OnDismissTimePickerDialog -> hideTimePicker()
-            is TaskCreation.UiEvent.OnTimeChange -> onTimeChange(state = uiEvent.timePickerState)
+            is TaskCreation.UiEvent.OnTimeChange -> {
+                onTimeChange(
+                    hour = uiEvent.hour,
+                    minute = uiEvent.minute,
+                )
+            }
             TaskCreation.UiEvent.OnDeleteTap -> deleteTask()
             TaskCreation.UiEvent.OnUpdateTaskTap -> updateTask()
         }
@@ -65,28 +77,26 @@ internal class TaskCreationViewModel @AssistedInject constructor(
     @OptIn(ExperimentalUuidApi::class)
     private fun createTask() {
         val uiState = _uiState.value
-        val timeState = uiState.timePickerState
 
-        if (uiState.taskTitle.isBlank() || timeState == null) {
+        if (uiState.taskTitle.isBlank() || uiState.hour == null || uiState.minute == null) {
             _uiState.update {
                 it.copy(
                     taskTitleError = uiState.taskTitle.isBlank(),
-                    timeError = timeState == null,
+                    timeError = uiState.hour == null || uiState.minute == null,
                 )
             }
         } else {
             viewModelScope.launch {
-                database.taskDao().insertAll(
-                    Task(
-                        uid = Uuid.random().toString(),
-                        title = uiState.taskTitle,
-                        description = uiState.taskDescription.ifEmpty { null },
-                        hour = timeState.hour,
-                        minute = timeState.minute,
-                    )
-                    // TODO set notification
+                val task = Task(
+                    uid = Uuid.random().toString(),
+                    title = uiState.taskTitle,
+                    description = uiState.taskDescription.ifEmpty { null },
+                    hour = uiState.hour,
+                    minute = uiState.minute,
                 )
 
+                database.taskDao().insertAll(task)
+                setReminder(task = task)
                 goBack()
             }
         }
@@ -124,10 +134,14 @@ internal class TaskCreationViewModel @AssistedInject constructor(
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
-    private fun onTimeChange(state: TimePickerState) {
+    private fun onTimeChange(
+        hour: Int,
+        minute: Int,
+    ) {
         _uiState.update {
             it.copy(
-                timePickerState = state,
+                hour = hour,
+                minute = minute,
                 isTimePickerVisible = false,
             )
         }
@@ -142,34 +156,51 @@ internal class TaskCreationViewModel @AssistedInject constructor(
         }
     }
 
+    // TODO unify with add task function almost identical
     private fun updateTask() {
         val uiState = _uiState.value
-        val timeState = uiState.timePickerState
 
         if (task != null) {
-            if (uiState.taskTitle.isBlank() || timeState == null) {
+            if (uiState.taskTitle.isBlank() || uiState.hour == null || uiState.minute == null) {
                 _uiState.update {
                     it.copy(
                         taskTitleError = uiState.taskTitle.isBlank(),
-                        timeError = timeState == null,
+                        timeError = uiState.hour == null || uiState.minute == null,
                     )
                 }
             } else {
                 viewModelScope.launch {
-                    database.taskDao().update(
-                        Task(
-                            uid = task.id,
-                            title = uiState.taskTitle,
-                            description = uiState.taskDescription.ifEmpty { null },
-                            hour = timeState.hour,
-                            minute = timeState.minute,
-                        )
-                        // TODO set notification
+                    val task = Task(
+                        uid = task.id,
+                        title = uiState.taskTitle,
+                        description = uiState.taskDescription.ifEmpty { null },
+                        hour = uiState.hour,
+                        minute = uiState.minute,
                     )
+
+                    database.taskDao().update(task)
+                    notificationRepository.cancelReminder(
+                        context = context,
+                        reminderId = task.uidToInt(),
+                    )
+                    setReminder(task = task)
                     goBack()
                 }
             }
         }
+    }
+
+    private fun setReminder(task: Task) {
+        notificationRepository.scheduleExactReminder(
+            context = context,
+            reminder = Reminder(
+                id = task.uidToInt(),
+                hour = task.hour,
+                minute = task.minute,
+                title = task.title,
+                message = task.description,
+            )
+        )
     }
 
     @AssistedFactory

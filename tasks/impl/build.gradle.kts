@@ -44,6 +44,7 @@ dependencies {
 
     implementation(project(":data:impl"))
     implementation(project(":ui:impl"))
+    implementation(project(":notification:api"))
 
     implementation(libs.bundles.core.ui)
     implementation(libs.bundles.compose)

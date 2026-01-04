@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.allulith.ui.impl.text.OrganiserBodyText
 import app.allulith.ui.impl.text.OrganiserErrorText
@@ -30,7 +31,9 @@ fun OrganiserTextField(
     fieldClickLabel: String? = null,
     isError: Boolean = false,
     errorText: String = "",
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        capitalization = KeyboardCapitalization.Sentences,
+    ),
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     Column(

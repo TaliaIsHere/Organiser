@@ -15,7 +15,7 @@ data class Task(
     @ColumnInfo(name = "minute") val minute: Int,
 ) {
     @OptIn(ExperimentalUuidApi::class)
-    fun uidToLong(): Int {
+    fun uidToInt(): Int {
         return Uuid.parse(uid).hashCode()
     }
 }

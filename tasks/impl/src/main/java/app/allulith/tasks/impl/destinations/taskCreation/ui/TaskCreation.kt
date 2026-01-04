@@ -8,9 +8,8 @@ internal object TaskCreation {
     data class UiState(
         val taskTitle: String,
         val taskDescription: String,
-        // TODO extract this compose class out of the state and simplify to hour and minute fields instead
-        @OptIn(ExperimentalMaterial3Api::class)
-        val timePickerState: TimePickerState? = null,
+        val hour: Int? = null,
+        val minute: Int? = null,
         val isTimePickerVisible: Boolean = false,
         val taskTitleError: Boolean = false,
         val timeError: Boolean = false,
@@ -26,8 +25,10 @@ internal object TaskCreation {
         data class OnTitleChange(val text: String) : UiEvent()
         data class OnDescriptionChange(val text: String) : UiEvent()
         data object OnShowTimerPicker : UiEvent()
-        @OptIn(ExperimentalMaterial3Api::class)
-        data class OnTimeChange(val timePickerState: TimePickerState) : UiEvent()
+        data class OnTimeChange(
+            val hour: Int,
+            val minute: Int,
+        ) : UiEvent()
         data object OnDismissTimePickerDialog : UiEvent()
         data object OnCreateTaskTap : UiEvent()
         data object OnUpdateTaskTap : UiEvent()

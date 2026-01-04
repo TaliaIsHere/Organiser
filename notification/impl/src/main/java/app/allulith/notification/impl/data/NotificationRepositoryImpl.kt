@@ -11,6 +11,7 @@ import app.allulith.notification.api.domain.NotificationRepository
 import app.allulith.notification.api.domain.Reminder
 import java.util.Calendar
 import javax.inject.Inject
+import kotlin.jvm.java
 
 internal class NotificationRepositoryImpl @Inject constructor() : NotificationRepository {
 
@@ -52,5 +53,20 @@ internal class NotificationRepositoryImpl @Inject constructor() : NotificationRe
             calendar.timeInMillis,
             pendingIntent,
         )
+    }
+
+    override fun cancelReminder(context: Context, reminderId: Int) {
+        val intent = Intent(context, NotificationReceiver::class.java)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            reminderId,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val alarmManager = context.getSystemService(AlarmManager::class.java)
+        alarmManager.cancel(pendingIntent)
+
     }
 }
