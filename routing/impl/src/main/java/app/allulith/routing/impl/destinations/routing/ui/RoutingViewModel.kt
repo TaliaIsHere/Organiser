@@ -12,10 +12,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @Stable
 @HiltViewModel(assistedFactory = RoutingViewModel.Factory::class)
@@ -27,8 +24,14 @@ internal class RoutingViewModel @AssistedInject constructor(
     fun route() {
         viewModelScope.launch {
             routingRepository.getUser().fold(
-                ifRight = { backStack.add(HomeDestination.Home) },
-                ifLeft = { backStack.add(SignUpDestination.Welcome) },
+                ifRight = {
+                    backStack.removeLastOrNull()
+                    backStack.add(HomeDestination.Home)
+                },
+                ifLeft = {
+                    backStack.removeLastOrNull()
+                    backStack.add(SignUpDestination.Welcome)
+                },
             )
         }
     }
