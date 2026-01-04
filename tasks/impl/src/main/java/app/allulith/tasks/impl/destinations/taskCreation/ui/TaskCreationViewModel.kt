@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 import app.allulith.tasks.api.domain.Task as DomainTask
 
 @Stable
@@ -109,6 +111,7 @@ internal class TaskCreationViewModel @AssistedInject constructor(
                 hour = hour,
                 minute = minute,
                 isTimePickerVisible = false,
+                timeError = false,
             )
         }
     }
@@ -122,42 +125,45 @@ internal class TaskCreationViewModel @AssistedInject constructor(
         }
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     private fun createOrUpdateTask(
         updateTask: Boolean,
     ) {
         val uiState = _uiState.value
 
-        if (task != null) {
-            if (uiState.taskTitle.isBlank() || uiState.hour == null || uiState.minute == null) {
-                _uiState.update {
-                    it.copy(
-                        taskTitleError = uiState.taskTitle.isBlank(),
-                        timeError = uiState.hour == null || uiState.minute == null,
-                    )
-                }
-            } else {
-                viewModelScope.launch {
-                    val task = Task(
-                        uid = task.id,
-                        title = uiState.taskTitle,
-                        description = uiState.taskDescription.ifEmpty { null },
-                        hour = uiState.hour,
-                        minute = uiState.minute,
-                    )
+        if (task == null && updateTask) {
+            return
+        }
 
-                    if (updateTask) {
-                        database.taskDao().update(task)
-                        notificationRepository.cancelReminder(
-                            context = context,
-                            reminderId = task.uidToInt(),
-                        )
-                    } else {
-                        database.taskDao().insertAll(task)
-                    }
+        if (uiState.taskTitle.isBlank() || uiState.hour == null || uiState.minute == null) {
+            _uiState.update {
+                it.copy(
+                    taskTitleError = uiState.taskTitle.isBlank(),
+                    timeError = uiState.hour == null || uiState.minute == null,
+                )
+            }
+        } else {
+            viewModelScope.launch {
+                val task = Task(
+                    uid = task?.id ?: Uuid.random().toString(),
+                    title = uiState.taskTitle,
+                    description = uiState.taskDescription.ifEmpty { null },
+                    hour = uiState.hour,
+                    minute = uiState.minute,
+                )
 
-                    setReminder(task = task)
-                    goBack()
+                if (updateTask) {
+                    database.taskDao().update(task)
+                    notificationRepository.cancelReminder(
+                        context = context,
+                        reminderId = task.uidToInt(),
+                    )
+                } else {
+                    database.taskDao().insertAll(task)
                 }
+
+                setReminder(task = task)
+                goBack()
             }
         }
     }
