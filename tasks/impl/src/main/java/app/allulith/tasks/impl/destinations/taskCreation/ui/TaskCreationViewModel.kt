@@ -20,8 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 import app.allulith.tasks.api.domain.Task as DomainTask
 
 @Stable
@@ -50,11 +48,10 @@ internal class TaskCreationViewModel @AssistedInject constructor(
     )
     val uiState = _uiState.asStateFlow()
 
-    @OptIn(ExperimentalMaterial3Api::class)
     fun onUiEvent(uiEvent: TaskCreation.UiEvent) {
         when (uiEvent) {
             TaskCreation.UiEvent.OnBackTap -> goBack()
-            TaskCreation.UiEvent.OnCreateTaskTap -> createTask()
+            TaskCreation.UiEvent.OnCreateTaskTap -> createOrUpdateTask(updateTask = false)
             is TaskCreation.UiEvent.OnDescriptionChange -> onDescriptionChange(text = uiEvent.text)
             is TaskCreation.UiEvent.OnTitleChange -> onTitleChange(text = uiEvent.text)
             TaskCreation.UiEvent.OnShowTimerPicker -> showTimePicker()
@@ -66,40 +63,12 @@ internal class TaskCreationViewModel @AssistedInject constructor(
                 )
             }
             TaskCreation.UiEvent.OnDeleteTap -> deleteTask()
-            TaskCreation.UiEvent.OnUpdateTaskTap -> updateTask()
+            TaskCreation.UiEvent.OnUpdateTaskTap -> createOrUpdateTask(updateTask = true)
         }
     }
 
     private fun goBack() {
         backStack.removeLastOrNull()
-    }
-
-    @OptIn(ExperimentalUuidApi::class)
-    private fun createTask() {
-        val uiState = _uiState.value
-
-        if (uiState.taskTitle.isBlank() || uiState.hour == null || uiState.minute == null) {
-            _uiState.update {
-                it.copy(
-                    taskTitleError = uiState.taskTitle.isBlank(),
-                    timeError = uiState.hour == null || uiState.minute == null,
-                )
-            }
-        } else {
-            viewModelScope.launch {
-                val task = Task(
-                    uid = Uuid.random().toString(),
-                    title = uiState.taskTitle,
-                    description = uiState.taskDescription.ifEmpty { null },
-                    hour = uiState.hour,
-                    minute = uiState.minute,
-                )
-
-                database.taskDao().insertAll(task)
-                setReminder(task = task)
-                goBack()
-            }
-        }
     }
 
     private fun onDescriptionChange(text: String) {
@@ -132,8 +101,7 @@ internal class TaskCreationViewModel @AssistedInject constructor(
             )
         }
     }
-
-    @OptIn(ExperimentalMaterial3Api::class)
+    
     private fun onTimeChange(
         hour: Int,
         minute: Int,
@@ -156,8 +124,9 @@ internal class TaskCreationViewModel @AssistedInject constructor(
         }
     }
 
-    // TODO unify with add task function almost identical
-    private fun updateTask() {
+    private fun createOrUpdateTask(
+        updateTask: Boolean,
+    ) {
         val uiState = _uiState.value
 
         if (task != null) {
@@ -178,11 +147,16 @@ internal class TaskCreationViewModel @AssistedInject constructor(
                         minute = uiState.minute,
                     )
 
-                    database.taskDao().update(task)
-                    notificationRepository.cancelReminder(
-                        context = context,
-                        reminderId = task.uidToInt(),
-                    )
+                    if (updateTask) {
+                        database.taskDao().update(task)
+                        notificationRepository.cancelReminder(
+                            context = context,
+                            reminderId = task.uidToInt(),
+                        )
+                    } else {
+                        database.taskDao().insertAll(task)
+                    }
+
                     setReminder(task = task)
                     goBack()
                 }
