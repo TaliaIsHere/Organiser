@@ -1,7 +1,6 @@
 package app.allulith.tasks.impl.destinations.taskCreation.ui
 
 import android.content.Context
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
@@ -23,7 +22,6 @@ import kotlinx.coroutines.launch
 import app.allulith.tasks.api.domain.Task as DomainTask
 
 @Stable
-@OptIn(ExperimentalMaterial3Api::class)
 @HiltViewModel(assistedFactory = TaskCreationViewModel.Factory::class)
 internal class TaskCreationViewModel @AssistedInject constructor(
     @param:ApplicationContext val context: Context,
@@ -101,7 +99,7 @@ internal class TaskCreationViewModel @AssistedInject constructor(
             )
         }
     }
-    
+
     private fun onTimeChange(
         hour: Int,
         minute: Int,
